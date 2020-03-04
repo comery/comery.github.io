@@ -4,20 +4,18 @@
 
     
   <url>
-    <loc>http://comery.github.io/2020/01/16/linux-command-split-for-transfering-data/</loc>
-    <lastmod>2020-03-04T12:10:34.753Z</lastmod>
+    <loc>http://comery.github.io/2020/03/04/log-in-cluster-using-a-interactive-way/</loc>
+    <lastmod>2020-03-04T12:34:05.469Z</lastmod>
     <data>
         <display>
-        <title>linux command split for transfering data</title>
-        <pubTime>2020-01-16T15:04:06.000Z</pubTime>
+        <title>log in cluster using a interactive way</title>
+        <pubTime>2020-03-03T23:19:33.000Z</pubTime>
         
         <tag>linux</tag>
          
-        <tag>split</tag>
+        <tag>expect</tag>
          
-        <tag>transfer</tag>
-         
-        <tag>bam</tag>
+        <tag>ssh</tag>
          
          
            
@@ -30,18 +28,20 @@
 
     
   <url>
-    <loc>http://comery.github.io/2020/03/04/log-in-cluster-using-a-interactive-way/</loc>
-    <lastmod>2020-03-04T12:10:26.197Z</lastmod>
+    <loc>http://comery.github.io/2020/01/16/linux-command-split-for-transfering-data/</loc>
+    <lastmod>2020-03-04T12:33:50.352Z</lastmod>
     <data>
         <display>
-        <title>log in cluster using a interactive way</title>
-        <pubTime>2020-03-03T23:19:33.000Z</pubTime>
+        <title>linux command split for transfering data</title>
+        <pubTime>2020-01-16T15:04:06.000Z</pubTime>
         
         <tag>linux</tag>
          
-        <tag>expect</tag>
+        <tag>split</tag>
          
-        <tag>ssh</tag>
+        <tag>transfer</tag>
+         
+        <tag>bam</tag>
          
          
            
