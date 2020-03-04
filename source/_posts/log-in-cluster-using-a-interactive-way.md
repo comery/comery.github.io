@@ -42,7 +42,7 @@ categories: 常用工具
   expect eof
 ```
 
-将上述脚本保存到文件，修改必要的参数为自己的信息，并 ```chmod +x script``` 添加执行权限，另外你需要检查一下电脑有没有expect语言，没有到话用 ```brew install expect``` 安装一下；然后就可以一键登录了。
+将上述脚本保存到文件，修改必要的参数为自己的信息，并 `chmod +x script` 添加执行权限，另外你需要检查一下电脑有没有expect语言，没有到话用 `brew install expect` 安装一下；然后就可以一键登录了。
 
 #### 上下传文件
 
