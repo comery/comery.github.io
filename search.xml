@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[log in cluster using a interactive way]]></title>
+    <url>%2F2020%2F03%2F04%2Flog-in-cluster-using-a-interactive-way%2F</url>
+    <content type="text"><![CDATA[也不知道公司的集群为什么就开始使用双向验证的，自从有了这东西，每天到公司除了打开电脑，输入ssh的快捷键，输入密码之后，就得掏出手机看看验证码，有时候要是眼花还得多输几遍，真是欲哭无泪，太tm浪费时间了， 上传下载文件更是如此，长此以往，记数字的能力都给提高了，记忆力都被迫营业了。 不过活人总不能被尿给憋死，上周师弟分享了一个expect语言交互式登录的方法，今天有空来试一下，试完感觉是： 真香！ 他的博客原文在这：=&gt; link 一键登录总结一下，主要是两个方面： 实现用电脑端就能收到验证码，另外需要在系统层面捕获到验证码序列，这个前人已经做了，我们只需要”拿来主义“， 这里主要是讲Mac上的方式，Win在文章中也有提到相应的软件，这里不再赘述。首先下载GoldenPassport.zip 然后解压，移动到Applications里面，因为不是官方软件所以需要你去system里面授权使用；开始运行之后在状态栏就有一个小图标，点击添加，将你的个人身份链接加进去，或者从二维码识别添加。然后就搞定了。 https://www.cnblogs.com/jasondan/p/6508249.htmlhttps://github.com/stanzhai/GoldenPassport 现在电脑已经可以接受验证码了，上面的软件是通过HTTP的方式给其他程序调用。那我们怎么接收验证码并实现自动登录呢？可以使用expect语言编写脚本获取验证码，实现交互式登录，具体脚本如下： 123456789101112131415161718#!/usr/bin/expect -f # xxxx is your account set user xxxx # your IP address set host IP # xxxx is your passsword set password xxxx # get the verfication code from the local host; 在 expect 脚本里边使用 shell 命令； grep 捕获变量； set code [exec sh -c &#123;curl -s "http://localhost:17304" |grep -Eo "\d&#123;6&#125;"&#125;] set timeout -1 spawn ssh $user@$host expect "*assword:*" send "$password\r" expect "*erification code:*" send "$code\r" interact expect eof 将上述脚本保存到文件，修改必要的参数为自己的信息，并 +x script``` 添加执行权限，另外你需要检查一下电脑有没有expect语言，没有到话用 ```brew install expect``` 安装一下；然后就可以一键登录了。123456789101112131415161718192021222324252627#### 上下传文件和上面的登录类似的，可以实现文件的自由下载；```shell#!/usr/bin/expect -f# the file need scp set src_file [lindex $argv 0] # the target directory set dest_dir [lindex $argv 1] # xxxx is your account set user xxxx # your IP address set host IP # xxxx is your passsword set password xxxx set code [exec sh -c &#123;curl -s &quot;http://localhost:17304&quot; |grep -Eo &quot;\d&#123;6&#125;&quot;&#125;] set timeout -1 spawn scp -r $user@$host:$src_file $dest_dir expect &quot;*assword:&quot; send &quot;$password\r&quot; expect &quot;*erification code:*&quot; send &quot;$code\r&quot; expect &quot;100%&quot; expect eof 这里面有个小坑就是，上面的两个脚本在写的时候，注释行不能写到行末，不然会引起格式报错。]]></content>
+      <categories>
+        <category>常用工具</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>expect</tag>
+        <tag>ssh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[linux command split for transfering data]]></title>
+    <url>%2F2020%2F01%2F16%2Flinux-command-split-for-transfering-data%2F</url>
+    <content type="text"><![CDATA[科研合作经常面临的一个问题是，需要及时的共享数据，对于不涉及太大数据的人来说，一个百度云盘或者谷歌drive就搞定了，但是对于做生物信息分析的，很多时候需要分享的是bam，fastq一类的文件，小则几百G，大到上T的数据，想想都头疼。不过这个问题也不难解决，搭建一个ftp就可以实现数据传输，尤其是和其他国家的合作者。 最近就遇到这个情况，当然这里并不是分享如何搭建FTP了，而是讲讲数据传输时候需要注意的问题。传输的过程中最常遇到的问题应该是网络的不稳定导致的数据传输中断，尤其是单个文件过大，所以对大文件切分是十分有必要的。 起初我要传一个很大的bam文件，是四个样本merge之后的，大概86G，同事帮我传的时候说请将每个文件拆分成单个文件不超过8G，我想了想，那把每个样品的bam文件拆开吧，但是这样也超过8G了呀，难道需要把单个bam文件转成sam文件再拆分（因为bam文件是二进制的，如果要按行操作，肯定是想着转成sam操作），好复杂啊，有没有什么更好的方式呢？随即我想到了linux的split命令，不过我只用它拆分过文本文件，加参数可以按照指定的行数拆分，难道也可以按照字节数拆分？1234567891011121314151617181920212223242526272829303132333435363738输入命令一查，还真是如此：```shellSPLIT(1) BSD General Commands Manual SPLIT(1)NAME split -- split a file into piecesSYNOPSIS split [-a suffix_length] [-b byte_count[k|m]] [-l line_count] [-p pattern] [file [name]]DESCRIPTION The split utility reads the given file and breaks it up into files of 1000 lines each. If file is a single dash (`-&apos;) or absent, split reads from the standard input. The options are as follows: -a suffix_length Use suffix_length letters to form the suffix of the file name. -b byte_count[k|m] Create smaller files byte_count bytes in length. If ``k&apos;&apos; is appended to the number, the file is split into byte_count kilobyte pieces. If ``m&apos;&apos; is appended to the number, the file is split into byte_count megabyte pieces. -l line_count Create smaller files n lines in length. -p pattern The file is split whenever an input line matches pattern, which is interpreted as an extended regular expression. The matching line will be the first line of the next output file. This option is incompatible with the -b and -l options. If additional arguments are specified, the first is used as the name of the input file which is to be split. If a second additional argument is specified, it is used as a prefix for the names of the files into which the file is split. In this case, each file into which the file is split is named by the prefix followed by a lexically ordered suffix using suffix_length characters in the range ``a-z&apos;&apos;. If -a is not specified, two letters are used as the suffix. If the name argument is not specified, the file is split into lexically ordered files named with the prefix ``x&apos;&apos; and with suffixes as above. 划重点，-b参数就可以对二进制文件按照字节来拆分，所以要拆分成大小为8G的文件就应该是： split -b 8G file.bam希望以上内容对大家的日常工作有所帮助。]]></content>
+      <categories>
+        <category>常用工具</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>split</tag>
+        <tag>transfer</tag>
+        <tag>bam</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[隔岸相望]]></title>
+    <url>%2F2020%2F01%2F12%2FLook-across%2F</url>
+    <content type="text"><![CDATA[期待我们是相隔一岸的即使只是楼宇之间我发出了一只可以收回的箭希望你无意间的一瞥可以辨认出它曲折的忧伤当所有洪水再也压抑不住请让我漂浮在这洪流中浪花踏下每一次昂首遥望]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Estimation of species divergence times usingusing protein sequences by mcmctree]]></title>
+    <url>%2F2019%2F07%2F09%2FEstimation-of-species-divergence-times-usingusing-protein-sequences-by-mcmctree%2F</url>
+    <content type="text"><![CDATA[1. prepare a phylogenetic tree with fossil evidence timeThe first line contains: species number(Tab)fossil record number example:18 1((((((((((((PET,(((PEFU,PN),PEFC),PEEL)),PEE),PT),PO),PF),PC15),(LB,CC)),SC)’&gt;0.90&lt;1.2833’,(CP,SL)’&gt;0.9898&lt;1.3899’),FM),AS),SN); control file 123456789101112131415161718192021222324seed = -1seqfile = 71genes.gblocks.protein.linked.fatreefile = three.fossil.treemcmcfile = mcmc.txtoutfile = out.txtndata = 1seqtype = 2 * 0: nucleotides; 1:codons; 2:AAsusedata = 3 * 0: no data; 1:seq like; 2:normal approximation; 3:out.BV (in.BV)clock = 2 * 1: global clock; 2: independent rates; 3: correlated ratesRootAge = &apos;&lt;7.0&apos; * safe constraint on root age, used if no fossil for root.model = 0 * 0:JC69, 1:K80, 2:F81, 3:F84, 4:HKY85alpha = 0 * alpha for gamma rates at sitesncatG = 5 * No. categories in discrete gammacleandata = 0 * remove sites with ambiguity data (1:yes, 0:no)?BDparas = 1 1 0.1 * birth, death, samplingkappa_gamma = 6 2 * gamma prior for kappaalpha_gamma = 1 1 * gamma prior for alphargene_gamma = 2 201 * gamma prior for rate for genessigma2_gamma = 1 10 1 * gamma prior for sigma^2 (for clock=2 or 3)finetune = 1: .1 .1 .1 .1 .1 .1 * auto (0 or 1): times, rates, mixing, paras, RateParas, FossilErrprint = 1 * 0: no mcmc sample; 1: everything except branch rates 2: everythingburnin = 2000sampfreq = 10nsample = 20000 2. run mcmctree1mcmctree mcmctree.ctl 3. modify settings in tmp1.ctl12345678910111213seqfile = tmp1.txttreefile = tmp1.treesoutfile = tmp1.outnoisy = 3seqtype = 2model = 0aaRatefile = wag.dat *from /data folder in paml&apos;s pathfix_alpha = 0alpha = 0.5ncatG = 4Small_Diff = 0.1e-6getSE = 2method = 1 4. run codeml1codeml tmp1.ctl 5. rename rst2 into in.BV1mv rst2 in.BV 6. modify the item of ‘usdata’ in mcmctree.ctl file1usedata = 2 7. final run of mcmctree1mcmctree mcmctree.ctl finally, you will get the tree you want!]]></content>
+      <categories>
+        <category>生物信息</category>
+      </categories>
+      <tags>
+        <tag>bio-software</tag>
+        <tag>phylogenetic tree</tag>
+        <tag>mcmctree</tag>
+        <tag>codeml</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hackathon]]></title>
+    <url>%2F2019%2F05%2F26%2FHackathon%2F</url>
+    <content type="text"><![CDATA[Hackathon, it sounds cool!就在这周一，我和另外三个小组成员完成了我们第一次Hackathon活动体验，说实话，在最初听到这个词的时候，觉得非常棒，这种团队成员通力合作，在短时间内完成一项挑战真的是一件让人兴奋的事情。专门查了一下这个词的由来，原来这是广大码农的一个传统啊，竟然之前没有发现。 编程马拉松（英语：hackathon，又译为黑客松），又称黑客日（hack day）、黑客节（hackfest）或编程节（codefest），是一个流传于黑客（hacker）当中的新词汇。编程马拉松是一种活动。在该活动当中，计算机程序员以及其他与软件发展相关的人员，如图形设计师、界面设计师与项目经理，相聚在一起，以紧密合作的形式去进行某项软件项目。编程马拉松的灵魂是合作地编写程序和应用。编程马拉松的时长一般在几天到一周不等。编程马拉松不是编写些一次性作品那么简单。编程马拉松的精髓在于：很多人，在一段特定的时间内，相聚在一起，以他们想要的方式，去做他们想做的事情——整个编程的过程几乎没有任何限制或者方向。 还有一个术语叫做“短跑（sprint）”。“短跑”用于描述一种性质与编程马拉松类似的活动。“短跑”的特点是：它只持续几天时间。另一个描述此类活动的词汇是“代码节”。这个词汇主要流传于Linux用户当中。“代码节”这个词是一个合成词，它由代码和节日两部分组合而成。“代码节”这个词是从“安装节”一词引申而来的。“安装节”是一种 Linux用户群的活动。 from 维基百科 讲讲这次的体验在征集题目的时候，我们小组就贡献了两个task，其中一个是我一直想做的，而且是基于我自己之前工作的，我觉得难度应该不是很大，应该很好完成。作为队长，开始我就组织大家提前准备一些资料，然鹅由于各种原因（主要是我太懒。。。= _ =;;）没有组织大家进行讨论，就连我手头的相关资料都是前一天晚上12点才给大家发邮件的。所以当时并没有报任何能得奖的念头，纯粹是体验一下（以及惦记着免费食宿，还能体验一下公司楼上公寓的景色）。附上我当时发的邮件： 实在抱歉，前面没能组织大家先讨论下。明天大家就当一次小活动吧，我们尽力而为，我预想的情况就是我们能将现有的注释intron的工具加进MitoZ的流程就可以了，当然可能会遇到很多问题，比如现有软件的注释是否正确的问题，coding的问题，后面可视化的问题，最终验证的问题，这些都是我们明天需要解决的问题。我们明天开始前先讨论下技术路线和大家的分工。最后，预祝我们能够顺利完成，奖金什么的都不重要，玩的开心最重要，希望大家有所收获。 等到当天比赛开始的时候，跟几位小伙伴稍微一讨论，才发现我自己对相关方面并不了解啊，就连相关类群的信息都模模糊糊，顿时觉得自己没把握住重点，内心羞愧难当啊。还好两位比较senior的同事都很给力，在中午吃饭时间我们算是定下了一个思路。后面经过奋战到凌晨3点，算是完成了一个基础版本，虽然比较粗糙，但还是解决了实际问题，可能也是因为这个原因，最后我们竟然也拿到了奖。 我觉得这次活动最大的收获就是让我重新体验到了那种解决问题的激情，这可能是我最近几年感觉最精力集中的一天，这种感觉非常美妙，当最后的代码运行成功的时候，非常具有成就感。另外，也是我在PPT里面提到的一点，完成往往要比完美更重要，大多时候的拖延都来自于完美主义，想着要花更多的时间将各种因素考虑到，然后想出一个万全之策，但这种做法会作茧自缚，迈出第一步变得十分艰难。只有迈出了第一步，整个过程才能变得流畅起来，即使最后的结果是需要将面前的推倒重来，那也是在原先的基础之上，总好过凭空创造。 码了这么多字，主要是为了自勉，保持这种激情以及摒弃“完美主义”。]]></content>
+      <categories>
+        <category>生物信息</category>
+      </categories>
+      <tags>
+        <tag>bio-software</tag>
+        <tag>mitoz</tag>
+        <tag>coding</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[I buy a domain name for my blog]]></title>
+    <url>%2F2019%2F01%2F29%2FI-buy-a-domain-name-for-my-blog%2F</url>
+    <content type="text"><![CDATA[You may find that my blog is redirected to a new domain name “comery.cn”, this is the first step to make my own website! really looking forward it!]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Set a flag for 2019]]></title>
+    <url>%2F2019%2F01%2F28%2Fset-a-flag-for-2019%2F</url>
+    <content type="text"><![CDATA[2019年的目标： 语言考试，申请学校 3篇文章发表（SE400, moth, fungi） 系统学习进化方面的理论，以著名的学者以及他们的理论作为线索，整理出系列文章 自己开发一个扩增子聚类软件和一个简单的组装软件 入门机器学习和熟练掌握Python的可视化工具 自己开发网站（comery.cn） 坚持每周至少有一篇的博客产出 完整的学习英语写作的经典书籍《Writing Science: How to Write Papers That Get Cited and Proposals That Get Funded》 如果6月份的会议摘要被选上，完成一次国际会议的英文报告。 好像现在不怎么想跑步了%&gt;_&lt;%，还是继续坚持篮球和排球吧。]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+      <tags>
+        <tag>flag</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[compare three methods to parse fasta using python]]></title>
+    <url>%2F2019%2F01%2F25%2Fcompare-three-methods-to-parse-fasta-using-python%2F</url>
+    <content type="text"><![CDATA[当我们在写一个比较复杂的脚本时，往往会涉及到很多小的函数，但是实现其功能的写法有很多种，如果能够清楚他们的速度，那么又便于提升我们代码整体的效率。 举一个非常简单而又常用的例子，用python写一个转化fasta文件的反向互补序列的脚本。 实现的方法有很多种，我们这里只讨论3中比较常用的： replace() dictionary transtable() 1234567891011121314151617181920212223242526import timedef revcom_base(sequence): # make a sequence complement # sequence = sequence.upper() sequence = sequence.replace('A', 't') sequence = sequence.replace('T', 'a') sequence = sequence.replace('C', 'g') sequence = sequence.replace('G', 'c') return sequence.upper()[::-1]def revcom_dict(s): complement = &#123; 'A' : 'T', 'G' : 'C', 'C' : 'G', 'T' : 'A', 'a' : 'T', 'g' : 'C', 'c' : 'G', 't' : 'A'&#125; t = '' for base in s: t = complement[base] + t return tdef revcom_transtable(sequence): # make a sequence complement # # replace function of string is too low! sequence = sequence.upper() transtable = str.maketrans('ATCG', 'TAGC') sequence = sequence.translate(transtable) return sequence[::-1] 以上是三个函数的实现，那我们下载一个数据来测试一下，哪个更快一些，以700K的数据为例； 12345678910111213141516171819202122232425262728293031323334353637def read_fasta(fp): name, seq = None, [] for line in fp: line = line.rstrip() if line.startswith("&gt;"): if name: yield (name, ''.join(seq)) name, seq = line, [] else: seq.append(line) if name: yield (name, ''.join(seq))def run_time(info): print("[INFO]: &#123;0&#125; total run time: &#123;1:.2f&#125;".format(info, time.time() - t) + "s")seqs = []with open('sequence.fasta') as fp: for name, seq in read_fasta(fp): seqs.append(seq)# method1t = time.time()for i in seqs: a = revcom_base(i)run_time("method1")t = time.time()# method2for i in seqs: b = revcom_dict(i)run_time("method2")t = time.time()#method3for i in seqs: c= revcom_transtable(i)run_time("method3") 运行结果： 123[INFO]: method1 total run time: 0.01s[INFO]: method2 total run time: 24.47s[INFO]: method3 total run time: 0.00s p.s. 开始用了一个23M的数据测试，第二种方法1个小时还没跑完…T_T’’三种方法的比较十分明了，这其中的主要原因是第二种方法需要单个碱基进行置换，并且是调用str方法连接，这是比较慢的步骤。]]></content>
+      <categories>
+        <category>生物信息</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>fasta</tag>
+        <tag>reverse &amp; complement</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[A guide to volleyball beginner]]></title>
+    <url>%2F2019%2F01%2F25%2FA-guide-to-volleyball-beginner%2F</url>
+    <content type="text"><![CDATA[个人整理了一些排球的入门资料，仅供有兴趣的小伙伴学习和分享。 了解排球的起源和发展来源于wiki 源起排球运动起源于美国。1895年2月9日，由美国麻省霍利奥克基督教青年会干事韦廉姆摩根发明。起初，人们分立在网球场球网的两侧，将排球托来托去，参加人数、击球次数不限。比赛中网高1.98米。这就是排球的雏形。1896年，在麻省斯普林菲尔德的国际YMCA训练学校（现名春田学院）举行了第一场公开比赛。初期，排球被称为Mintonette（小网子之意）。1896年，霍尔斯泰德教授根据比赛特点，提议改为Volleyball（空中击球），即现代国际通用名称Volleyball（排球）。1900年，专为排球运动设计的专用球诞生。当时的正式用球圆周为25~27英寸（约63.5~68.8厘米），重量为9~12盎司（约255~346克）。现代国际比赛用球的材料和制作工艺有很大改变，但球的规格还和以前差不多。斯普林菲尔德的国际YMCA训练学校是最早传播排球运动的组织。YMCA的干事、传教士、学校毕业生以及第一次世界大战中的美国军人，都是排球运动的初期传播者。 后续推广与规则演变排球运动首先传入加拿大、古巴、巴西等国，第一次世界大战（1914至1918年）期间传入法国、意大利等欧洲国家。1917年，比赛制度由21分制改为15分制。1920年，每边三次击球和后排攻击规则成立。1922年，第一次青年会美国锦标赛在纽约布鲁克林举行。1928年，全美排球协会成立。第二次世界大战后，东欧国家排球运动技术水准长期居世界领先地位，欧洲各国从一开始接触的就是6人制排球，因此技战术水准得以长久领先。排球运动传入亚洲始于1900年的印度。1913年第一届远东运动会把排球列入正式比赛，由于当时规则尚不完善，亚洲各国的排球运动经历了16人制、12人制和9人制，直到1950年代，才逐步过渡到6人制排球。为适应排球运动的发展，1947年在法国巴黎正式成立国际排球联合会，负责领导国际排球运动，第一任主席是法国人保尔·黎伯。国际排联现已有140多个会员国。 1949年，第一届世界锦标赛于捷克布拉格举行。 1964年，东京奥运会中排球项目首次为奥运会所接收。 1974年，于墨西哥举行的世界锦标赛于东京以电视转播。 1983年，AVP职业排球联盟成立。 1986年，WPVA女子职业排球联盟成立。 1990年，WORLD LEAGUE 世界联盟成立。 1998年，FIVB于11月订出“落地得分制”的新规则，由翌年元旦开始进行9个月的试行。 2000年，经若干新规则的修订，“落地得分制”正式于1月1日起施行，取代以往需要拥有“发球权”的“发球得分制”。 现代排球的规则场地与设施排球场排球场由比赛场区（playing court）和无障碍区（free zone）组成。比赛场区长18米，宽9米。可分为两块等面积（9m×9m）的区域，比赛的两队各于球场球网的一边，每一边又可分为前区（或前排，离中线3米内的区域）和后区（或后排，离中线3米到9米的区域），划分前区和后区的线称为攻击线（attack line）。无障碍区，指的是场地上方不得有任何障碍物的空间，除宽度不得小于3米外没有其他限制。球场各线条宽5公分。 球网本身网高1米，离地面最高点在男子竞赛中为2.43米，女子竞赛为2.24米，老年与青少年竞赛也都有其不同的规定高度。室内排球场最小静空高度为7米，不过通常建议要有8米以上。 违例与犯规 连击：单人连续击球两次以上（除第一接传、或拦网时接触身体多个部位、或拦网后接一传） 持球：球停留于手中（通常以裁判的个人。 我们主观角度来决定） 4次击球：一方队伍击球三次以上（拦网触球不算在内） 过网击球：对方球员未完成攻击性击球前或同时，于对方空间触球 位置错误：位置错误（只和前后左右有关）发球方由主审裁定，接发球方由二审裁定；或轮转错误（发球员） 触网：根据2012年排球新规则，身体任何一部位碰触到网上白带或标志竿顶部80公分才算触网或是干扰到另一方之行为才算（但根据2015年最新规则，恢复到只要碰触网子即算触网）后排违例：后排不能拦网。 暂停和换人每局比赛各队有两次普通暂停机会，时间30秒。比赛有一队先到8分或16分时，各有一次技术暂停的机会（决胜局除外），时间60秒，是否给予暂停也可以由主审来裁定。 每局比赛各队均有6次换人的机会。主力队员只能退出比赛一次，同一局中再次上场比赛时，只能和刚才的人换。替补队员每局只能上下场各一次，可以替换任何一个主力队员；同一局中只能由被他替换下场的队员来替换。 得分早期的排球比赛采用的是发球得分制。队伍（己方）先要取得“发球权”成为发球方，然后在对阵中取胜对方，便得一分，并持续拥有“发球权”。相反，如发球方（己方）在对阵中败阵，虽然对方未能即时得分，但“发球权”便转移到对方。目前世界各地进行的是落地得分制。改成落地得分制后，会让比赛更刺激，双方会更积极珍惜每一球。排球比赛采取五局三胜制，先取三局胜利就是获胜。在早期采用的发球得分制中，每局均为十五分制的发球得分制，如两队十四分平手后就行局末平分制，直至其中一队连胜两分，方可赢得一局。而目前推行的落地得分制，则首四局改设定为二十五分制，第五局十五分制。另外，每局都是落地得分制，取消发球权制。同样，两队二十四分平手（第五局十四分平手）后就行局末平分制，直至其中一队连胜两分，方可赢得一局。发球方如在发球时，排球不过网算对方得分；排球若触网顶进入对方球区则继续进行。（旧制发球得分制中，无论发球时排球不过网或触网进入对方球区，均作发球方败阵论。）排球压线可算作得分。排球任意部分只要落于场内或线上都算得分。在某些情况下, 一方如对判罚有异议，可通过“鹰眼挑战”(摄影机)来逆转裁判的决定。 排球基本技术和对应的训练方法来源于知乎 技术动作的掌握是通过不断的练习形成肌肉记忆的过程。速成是很难的。我的建议是在没有好的老师的情况下上网看正规的教学视频，了解正确的动作、手型、击球部位、发力方法等。然后开始进入基本技术的练习,强烈建议观看《汪嘉伟排球教学视频》 排球的基本技术主要分为 传、垫、扣、拦、发 对应的学习方法可以参考以下资料：如何系统地练习排球？ 视频学习资料：(需要翻墙)Volleyball Tutorial 建议其实学习一项体育运动跟我们平时学习本质都是一样的，在了解和掌握基本动作和技巧时，必须要深刻认识每一个动作背后的机理，要知其然而知其所以然，对应到排球运动中就是：你需要知道为什么要做这样一个动作，这是最省力的姿势还是效率最大的姿势，其他动作的的优缺点是什么。所以在每一次练习中都要去思考和探索这些问题的答案，这样才会在每一次训练之后得到进步。 技战术暂停和换人每局比赛各队有两次普通暂停机会，时间30秒。比赛有一队先到8分或16分时，各有一次技术暂停的机会（决胜局除外），时间60秒，是否给予暂停也可以由主审来裁定。 每局比赛各队均有6次换人的机会。主力队员只能退出比赛一次，同一局中再次上场比赛时，只能和刚才的人换。替补队员每局只能上下场各一次，可以替换任何一个主力队员；同一局中只能由被他替换下场的队员来替换。 得分早期的排球比赛采用的是发球得分制。队伍（己方）先要取得“发球权”成为发球方，然后在对阵中取胜对方，便得一分，并持续拥有“发球权”。相反，如发球方（己方）在对阵中败阵，虽然对方未能即时得分，但“发球权”便转移到对方。 目前世界各地进行的是落地得分制。改成落地得分制后，会让比赛更刺激，双方会更积极珍惜每一球。 排球比赛采取五局三胜制，先取三局胜利就是获胜。 在早期采用的发球得分制中，每局均为十五分制的发球得分制，如两队十四分平手后就行局末平分制，直至其中一队连胜两分，方可赢得一局。而目前推行的落地得分制，则首四局改设定为二十五分制，第五局十五分制。另外，每局都是落地得分制，取消发球权制。同样，两队二十四分平手（第五局十四分平手）后就行局末平分制，直至其中一队连胜两分，方可赢得一局。 发球方如在发球时，排球不过网算对方得分；排球若触网顶进入对方球区则继续进行。（旧制发球得分制中，无论发球时排球不过网或触网进入对方球区，均作发球方败阵论。） 排球压线可算作得分。排球任意部分只要落于场内或线上都算得分。 在某些情况下, 一方如对判罚有异议，可通过“鹰眼挑战”(摄影机)来逆转裁判的决定。 基本战术男子排球主要进攻点是接应二传，尤其是后排一号位的进攻。主攻负责策应进攻和后排防守。副攻主要负责拦网，进攻以三号位为主，和二传的背后配合较少见。 而女子排球的打法则更为多样，以俄罗斯为代表的欧洲球队以身高的绝对优势，以高球强攻为主，进攻多为四号位高球以及后排进攻。以泰国队为代表的亚洲球队，由于身高劣势，则以快速多变的打法为主，防守小球细腻，串联好，多二三号位跑动进攻，四号位以平拉开为主。巴西，美国，中国等队伍则结合了两种打法，既强调串联和防守，在四号位或后排也有强力进攻手得分。 球员位置球员通常不需要掌握全部六种技术——发球、接发球、举球、扣球、拦网、救球，而是通常根据球队的战术，以其中的一种或多种为专长。 现代排球的场上位置分配包含三种：攻手（分为主攻手和副攻手，以及接应二传）、二传手（二传）和自由人（专职防守的球员）。为了有效阻挡对方的进攻，并在对方有足够反应时间之前将球以陡峭的角度高速弹回对方场地， 一般来说由身材较高且弹跳力好的球员担当攻手，但也不一定如此，会因教练对于战术的需求而临时有所变动。 主攻手主攻手是在靠近标志杆的位置进攻的球员（通常在4号位和2号位）。由于大多数传向主攻位置的球都是高球，因此主攻手往往采用很长的助跑，有时甚至从边线外开始助跑。在进攻中主攻手通常依靠强力扣杀得分，但有时也要求以斜线助跑和快攻来扰乱对方的防守。主攻手还需要掌握一传技术，因为在对方发球时他们通常作为自由人以外的第二一传点。惯用右手的主攻手最适合在4号位（前排左侧）进攻，相对的，惯用左手的主攻手最适合在2号位（前排右侧）进攻。主攻手个人的技巧和突破的能力相当重要，也是球队主要气势的带动者。在接发球的攻击时，主要是由二传手来配球，而在来回的过程当中，主攻手的积极，爆发力，持续力就相当重要了，主攻手对于处理球的能力也要有相当的稳定度。 同时，在现代排球当中，多数主攻手在后排并不被自由人换下。这就意味着多数主攻必须参与一传（接发球）和后排防守，这就使主攻这一位置要求运动员既有全面的扣球实力，又要有良好的后排保障技术。主攻的进攻任务在很大程度上由接应二传分担。另外，主攻手往往是队伍中在场上的主要进攻者及得分手。 快攻手（拦中）副攻手又称为拦中，是经常在靠近二传手的位置打出快攻的球员。过去副攻手专职拦网，要很清楚知道对方进攻的组织路线，并且需要从中间向两边快速移动以组织双人拦网。现代排球中，副攻手成为场上的重要攻击手之一，也是牵扯对方对边攻手拦网布局的重要一环。男排副攻进攻以三号位半高球为主，女排副攻则多和二传在二三号位配合，如短平快，背快，背飞等技术。同时，副攻手在前排也要负责移动拦网，以便给对方的进攻造成压力。通常副攻手是队中最高的球员（例如女子的顶级副攻普遍在190厘米以上，男子的顶级副攻则普遍在205厘米以上），后排被自由人换下且不要求有很好的防守技术。副攻手（拦中）的稳定发挥会具有很大的牵制力，可以让二传手的配球有更多的可能性，副攻的掩护也会让主攻手以及接应二传的攻击成功率提高。 接应二传（举球对角）通常接应在常见的5-1阵形中只会有一个，与二传打对角（又称举球对角、举对）。接应原本的主要用处是当二传手位置不佳无法传球时担任二传任务。但是，在现代排球战术中，接应已经发展成为一个队的主要进攻点，尤其在男排队伍中是第一进攻点，以及以巴西、俄罗斯为代表的欧美女子排球队也采用了这种打法，接应二传承担了非常多的进攻任务，很多欧美球队的接应二传是队中扣球技术最好的球员；相反在亚洲女子球队，尤其以中国女排为主，接应二传在场上需承担一传任务，因此并不是队伍中的主要进攻点及得分手，而且利用跑动战术也比较多。通常接应在前排站在二传手的右边（二号位，后排一号位），扣二传手的背传球。 二传手（二传手）一般又称二传手，二传手可说是球场上的教练，二传手的冷静与处理能力往往决定一场球赛的胜负，进攻的节奏几乎多由二传手来掌握。职责在于组织全队的进攻，他们负责在举球时将球送至让攻手最适宜扣球的位置。二传手必须有能力和扣球队员组合出多种变化以破坏对方的防守，并且能够欺骗对方的拦网队员。移动快速、传球精准是一个二传手的必备素质。一位好的二传手可串起全队的攻势，并且必须相当了解队上各攻击手的特性与习惯，在比赛中更要保持清楚的头脑与思维。另外，在某些时候二传手也必须扮演攻击手角色，比如二次吊球或扣球，吊后场等经常因为出其不意而得分。所以除了练习举球技巧外，二传手也必须具备些许长球攻击和吊球的能力，以便变换攻击的节奏，也可以让对方防守上有更大的压力，一旦对方注意力不集中或是体力下滑，往往会有出其不意的得分效果。所以一位优秀的二传手的训练与养成也是相当辛苦的，随着强力发球的跃起，二传手甚至是队上其他的角色的传球能力更需要提升。 自由人自由人是专职防守的球员，负责接扣球和接发球防守的部分（救球）。通常自由人具有全队最快和反应速度最好的一传技术（但也会因此在后排少了一个攻击手，减少攻击上的路径变化）。由于自由人不需要在网前进攻或防守，可以由一传技术好且反应快速的矮个子球员胜任。在比赛被指定为自由人的球员不可以担任其他位置。自由人的替换次数是不受限制的，但两次的替换之间必须隔一次死球，而且只能由被替换下场者做轮替（或第二位自由人）。替换的时间必须在裁判吹哨示意发球前做更换。每一局开始前，自由人不得先进场，必须等第二裁判核对先发球员后才可替换进场。 阵型根据攻手和二传手的数量不同，排球有”4-2”、”6-2”和”5-1”三种标准阵型。4-2是最基本的阵型，只出现在初学者的比赛中，而在高级别比赛中，目前最常用的是5-1阵型也就是单举。 4-2阵型4-2阵型有4个攻手和2个二传手。二传手通常在前排中间的位置进行二传（在罕见的出现在比赛中的4-2阵型中，二传手更多地在前排靠右的位置进行二传）。因此在比赛的任何时刻全队有两名前排进攻球员。 在轮转中两名二传手对角站位。在典型的阵型中包括两名对角站位的主攻手，因此在任何时刻前排和后排都各有一名主攻手。发球之后，前排球员移动到各自负责的位置，二传手总是在前排中间。或者，二传手移动到前排靠右的位置，此时前排另外两名球员分别担当主攻（左侧）和副攻（中间），但缺陷在于缺少一名在二传手身后的进攻球员，使得对方有一名前排球员可以放心地参与中间位置的拦网。 4-2阵型很明显的弱点就是只有两名进攻球员，使得球队可采用的进攻手段很少，进攻的变化也就少。 从另一个角度看，二传手也是一种攻击力（虽然是较弱的攻击力），因为当二传手轮转到前排时，是允许扣球与吊球的，所以当一传过来的球近网时，二传手可以选择击球过网（二次球）。这意味着在其他情况下可以忽略对二传手进行拦网的对方球员，此时必须留意二传手的进攻，那么我方的进攻球员就可能得到更好的机会。 6-2阵型在6-2阵型中，总有一名球员从后排移动到前排进行二传举球，三名前排球员全部担当进攻位置，可以有战术上的变化。因此，所有六名球员都会在某些时刻担任攻手，其中有两人需要担任二传手。所以，6-2阵型实际上是一种4-2阵型，只不过由后排的二传手穿插到前排负责二传。6-2阵型需要两名二传手（也就是俗称双举），在轮转中对角站位。除二传手外，典型的阵型中还包括两名副攻手和两名主攻手。采用对角站位的方法，任何时刻前后排各有一名主攻手一名副攻手。在发球之后，前排球员移动到各自负责的位置。6-2阵型的优势在于每一时刻都有三名前排进攻球员，使得进攻手段最大化。然而，6-2阵型不仅要求球队拥有两名高质量的二传手，还要求这两名球员在前排时又是有实力的攻手。在国际级比赛中，只有古巴国家女子排球队采用这种阵型。 5-1阵型5-1阵型中只有一名球员担任二传手，不管他的位置在前排还是后排。因此当二传手在后排时，全队拥有三名前排攻击球员；而当二传手在前排时，只有两名前排攻击球员。加起来一共五名。在5-1阵型中，轮转中与二传手对角站位的球员称为接应二传（举对）。一般来说，接应二传不参与一传，当对手发球时，接应二传站在队友们的后方。当二传手位于前排时，接应二传可以作为第三进攻点（后排进攻），这在现代排球中已经成为各队提高攻击力的常用手段。因此接应二传通常是队中扣球技术最好的球员。后排进攻通常来自后排右侧（1号位），但在高级别的比赛中从后排中间位置进攻的情况正在增多。5-1阵型的一大优势是，二传时总有3个攻击点可攻选择。如果二传手运用好这一点的话，对方的副攻手可能没有足够的时间与主攻手组织双人拦网，增加了我方进攻得分的机会。另一个优势是，当二传手位于前排时，他可以采用二次球进攻，这样能够进一步扰乱对方拦网球员：我方二传手可能扣球，也可能传球给进攻球员中的任何一位。一个优秀的二传手能深刻理解这一点，不仅能二次球进攻或者传快攻，还可以能够设法迷惑对方球员。5-1进攻阵型实际上是6-2阵型和4-2阵型的混合：当二传手在前排时，看起来与4-2阵型相似；当二传手位于后排时，又与6-2阵型相似 排球相关的英语第一部分 各个位置队员的名称： 1234567891011主攻手：chief spiker副攻手：second spiker二传手：setter；tosser接应二传：second setter自由人：libero主二传：chief [specialist] setter（别的自己类推吧）当然裁判也少不了的第一〔正〕裁判员：（first）referee第二〔副〕裁判员：second referee；umpire司线员：line judge; linesman 规则部分 1234567891011121314151617181920212223242526272829303132局：game休息暂停：time-out (for rest)技术暂停：technical time-out轮转换位：rotation轮转顺序：rotational order同排队员换位：lateral switch持球：holding; catching; sticky; held ball捞球：scooping推球：shoving; pushing带球：carrying举球：lifting连击：double hit〔touch〕; dribbling四次击球：four hits界内球：fair ball出界：outside压线球：ball on line触手出界：touch out触网：touch net; net fault不过网：not over the net碰标志杆：touch the rod下〔入]网：net in过网击球：over-[cross-]net hit拦网犯规：blocking fault越过中线：passing the center line脚步犯规：foot fault轮转犯规：rotational fault位置错误：positional fault; overlapping换人违例：illegal substitution双方犯规：double foul对方失误送分：points from opponents&apos; errors个人警告：personal warning比赛规则委员会：Rules of the Games Commission 发球部分 12345678910111213141516171819202122232425262728发球：service；serve发球队员：server关键时上场发球的队员：pinch server发球方：serving team [side]发球次序：order of service; serving order发球得分：ace; service point发球失误：service error发球违例：service fault（发球后）：change of position; switching抛球：toss上手〔网球式〕发球：overhand [tennis] service下手发球：underarm[underhand] service侧面发球：sidearm[side-hand]service钩手发球：hook service砍式发球：chopping service扣球式发球：smash[cannonball]service抡臂〔大力钩手〕发球：windmill [roundhouse] service跳起发球：jump service大力跳发：smashing jump service擦网球：net ball发高[顶棚]吊球：lobbing [ceiling; sky] service发近网吊球：drop short service发旋转球：spinning service发飘球；日本式发球：floater；floating [Japanese] service发上手飘球：overhand floater发下沉球：drop [sink] service发保险球：safe service发怪球：freak service 学习资料Guide-to-Volleyball-Basics-2006 最后祝你玩的愉快！]]></content>
+      <categories>
+        <category>兴趣爱好</category>
+      </categories>
+      <tags>
+        <tag>Volleyball</tag>
+        <tag>training</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[A bug of import reference from google scholar using endnote fromat]]></title>
+    <url>%2F2018%2F12%2F16%2Fa-bug-of-import-reference-from-google-scholar-using-endnote-fromat%2F</url>
+    <content type="text"><![CDATA[发现一个endnote导入文件的bug,我们首先来看一下一般的导入操作： 用endnote导入google scholar的参考文献，导出格式为Endnote格式以一篇文章刚发表在bioRxiv上的文章为例： 1MitoZ: A toolkit for mitochondrial genome assembly, annotation and visualization step 1, 打开google scholar,搜索然后下载： 如果是单个引文下载，下载的文件后缀名为“.ris”， 如果是多个引文下载，下载文件名后缀为“.enw”，很奇怪的是，虽然名为.ris格式，但是用Endnote 导入时，选择Reference Manager(RIS)是没有反应的，所以只能选择EndNote Import 格式 step 2, 打开Endnote软件导入 OK，导入成功后，EndNote这里已经出现了这个文献，然后点击选择，会发现 anutors 字段和journal字段是混在一起的，用%J连接。 很明显，如果不仔细检查，你之后加入到文章中的文献就会有问题， 解决方案，用RefMan 替代EndNote格式 这样下载的文件格式也是RIS格式，而且在导入的时候可以直接使用Reference Manager(RIS)格式，比较一下，发现这次没有问题。]]></content>
+      <categories>
+        <category>文献阅读</category>
+      </categories>
+      <tags>
+        <tag>paper</tag>
+        <tag>endnote</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Mitochondrioal genome assembly appraches]]></title>
+    <url>%2F2018%2F11%2F07%2FMitochondrioal-genome-assembly-appraches%2F</url>
+    <content type="text"><![CDATA[Mitochondrioal genome assembly apprachesSOAPdenovo-Translinkhttps://github.com/aquaskyline/SOAPdenovo-Trans example1234SOAPdenovo-Trans-127mer pregraph -s assembly.lib -K 61 -o out -n -i 10SOAPdenovo-Trans-127mer contig -g out -e 2 -M 3 -q 5 -Q 2SOAPdenovo-Trans-127mer map -s assembly.lib -g out -r -fSOAPdenovo-Trans-127mer scaff -g out -L 125 assembly.lib is like: 12345678max_rd_len=150 [LIB] avg_ins=150 reverse_seq=0 asm_flags=3 map_len=32 q1=test_1.fq.gz.clean.gz q2=test_2.fq.gz.clean.gz ORG.asmlinkhttps://pythonhosted.org/ORG.asm/index.html example123oa index --estimate-length=0.9 butterfly papi_R1.fastq.gz papi_R2.fastq.gzoa buildgraph --seeds protMitoMachaon butterfly butterfly.mitooa unfold butterfly butterfly.mito NOVOPlastylinkhttps://github.com/ndierckx/NOVOPlasty usage1perl NOVOPlasty.pl -c config.txt exampleexample of config.txt: 1234567891011121314151617181920212223242526272829303132Project:-----------------------Project name = TestType = mitoGenome Range = 12000-22000K-mer = 39Max memory = Extended log = 0Save assembled reads = noSeed Input = Seed.fastaReference sequence = /path/to/reference_file/reference.fasta (optional)Variance detection = noHeteroplasmy = HP exclude list =Chloroplast sequence = /path/to/chloroplast_file/chloroplast.fasta (only for &quot;mito_plant&quot; option)Dataset 1:-----------------------Read Length = 151Insert size = 300Platform = illuminaSingle/Paired = PECombined reads =Forward reads = /path/to/reads/reads_1.fastqReverse reads = /path/to/reads/reads_2.fastqOptional:-----------------------Insert size auto = yesInsert Range = 1.8Insert Range strict = 1.3Use Quality Scores = no]]></content>
+      <categories>
+        <category>生物信息</category>
+      </categories>
+      <tags>
+        <tag>bio-software</tag>
+        <tag>mitochondrion</tag>
+        <tag>assembly</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Single-cell-sequencing]]></title>
+    <url>%2F2018%2F09%2F15%2FSingle-cell-sequencing%2F</url>
+    <content type="text"><![CDATA[基础知识单细胞测序扫盲：是什么？为什么？怎么做？单细胞测序综述单细胞测序教程单细胞测序方法比较 blogsCell：利用人工智能绘制衰老大脑的基因表达图谱两篇Cell，五篇Science从癌症到发育， 从衰老到免疫，单细胞研究显神威 整理 如何获得单细胞 流式细胞仪(FACS)方法 显微操作技术 优缺点 single cell DNA-seq 扩增技术，全基因组扩增技术(WGA)主要是通过 PCR、多重替换扩增技术(MDA)或两者的组 合来实现 谢晓亮等人基于前两种方法提出综合两种方法的 MALBAC 方法 single cell RNA-seq Single Cell RNA-seq原理理解 单细胞测序方法比较 单细胞技术的应用 在肿瘤研究中的应用 The first five years of single-cell cancer genomics and beyond Single-cell RNA-seq highlights intratumoral heterogeneity in primary glioblastoma 在微生物研究中的应用 Review of methods to probe single cell metabolism and bioenergetics Stochasticity of metabolism and growth at the single-cell level 在神经科学中的应用 Cell types in the mouse cortex and hippocampus revealed by single-cell RNA-seq 在免疫学领域的应用 Single-cell technologies for monitoring immune systems 胚胎发育学的研究(见下方) 分享三篇文献通过单细胞技术研究了心脏、神经和血细胞的发育过程，绘制了两种模式动物：非洲爪蟾和斑马鱼从受精卵到完整胚胎的基因表达图谱。 Single-cell reconstruction of developmental trajectories during zebrafish embryogenesis The dynamics of gene expression in vertebrate embryogenesis at single-cell resolution Single-cell mapping of gene expression landscapes and lineage in the zebrafish embryo]]></content>
+      <categories>
+        <category>文献阅读</category>
+      </categories>
+      <tags>
+        <tag>Seminar</tag>
+        <tag>Learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Get Wikipedia page using python]]></title>
+    <url>%2F2018%2F08%2F27%2FGet-Wikipedia-page-using-python%2F</url>
+    <content type="text"><![CDATA[backgroundI got a long list of animals, about 9000, and I need to figure out where each animal lives, specially whether lives in Africa. Unfortunately, there is no one database containing this kind information, all website I can got from internet is something like common knowledge other than a scientific list. Finally, I realized I forget a powful tool - wikipedia, but how to make it? I can not search them one by one, it must kill me. wait, I can code to solve this problem, come on, I am a bioinformatican. python module - wikipediaWikipedia is a Python library that makes it easy to access and parse data from Wikipedia.you can install by pip: 1pip install wikipedia Read the docs at https://wikipedia.readthedocs.org/en/latest/.QuickstartFull API achievementI post my codes here: 12345678910111213141516171819202122232425262728293031323334353637import wikipediaimport sysimport osimport subprocessif len(sys.argv) &lt; 3: print("Usage: python " + sys.argv[0] + "item_list " + "outdir") exit()file = sys.argv[1]outdir = sys.argv[2]if not os.path.exists(outdir): os.mkdir(outdir)log = open("search_wiki.log",'a')log.write("#item\tsuggestion_item\turl\n")with open(file) as fh: for item in fh.readlines(): item = item.rstrip() if item[0] != "#": re_item = item.replace(' ','_') print(item) try : wikipedia.summary(item) except wikipedia.exceptions.PageError: log.write(item + "\tNA\n") pass except wikipedia.exceptions.DisambiguationError: log.write(item + "\tNA\n") pass else: page = wikipedia.page(item) url = page.url log.write(item + "\t" + url + "\n") cmd = "wget " + " -O " + outdir + "/" + re_item +".html " + " -q " + url subprocess.call(cmd , shell=True) subprocess.call("sleep 0.5", shell=True)]]></content>
+      <categories>
+        <category>常用工具</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>wikipedia</tag>
+        <tag>crawler</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[[BUG]-diamond of parsering xml result]]></title>
+    <url>%2F2018%2F08%2F23%2FBUG-diamond-of-parsering-xml-result%2F</url>
+    <content type="text"><![CDATA[ERROR Parse error for this part of the blast XML document: Error on line 1042356: The entity name must immediately follow the ‘&amp;’ in the entity reference. When I use diamond replacing blast to search NR database, the result with xml format can’t be parsed by blast2GO. Aftering see this page, I got it soloved. &amp; and “\&amp;”why use “\&amp;” to replace “&amp;”?when you type &amp;amp; in a markdown or html file, you will find it turning into &amp; directly.If you want type &amp;amp;, you need add a \ in front it, like: &quot;\&amp;amp;&quot;. &lt;”xxx”&gt; in lineIf your xml has line contain &quot;&lt;word&gt;&quot; but that is not a xml format tag, so that there is no &quot;&lt;\word&gt;&quot; paried with it. then error occurs. &lt;in lineif there is &lt;in line and &gt; in somewhere behind in the same line,(for fasta format, that is very common), it also occur error.]]></content>
+      <categories>
+        <category>坑坑不息</category>
+      </categories>
+      <tags>
+        <tag>bio-software</tag>
+        <tag>diamond</tag>
+        <tag>blast2GO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Can not find libMagickCore-6.Q16.so.2]]></title>
+    <url>%2F2018%2F08%2F22%2Fcan-not-find-libMagickCore-6-Q16-so-2%2F</url>
+    <content type="text"><![CDATA[display errorDisplay command in linux might be used often if you are using a linux/unix remote terminal on a windows or MacOS system. If you want to displat an image on remote host into local host, you must install xQuartz to MacOS or Xming to windows, and with ImageMagick installed in remote linux system. recently, I find an error : display: error while loading shared libraries: libMagickCore-6.Q16.so.2: cannot open shared object file: No such file or directory how it comes? Because ImageMagick’s lib directory does not add into your environment path. so just export /yourpath/imagemagick/lib 1export LD_LIBRARY_PATH="/yourpath/imagemagick/lib:$LD_LIBRARY_PATH" It troubled me for a long time, may it be helpful to you. trouble againI have updated my ImageMagick to version 7.0.8-10 and add it to environment, but it still does not work!then I find command display I used is generated by libMagick version 6.0, so error occured: display: error while loading shared libraries: libMagickCore-6.Q16.so.2: cannot open shared object file: No such file or directory remove thisdisplayin your $PATH, and ln -l newdisplayto your environment. ln -s /yourpath/imagemagick/bin/display /home/yourname/bin]]></content>
+      <categories>
+        <category>常用工具</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+        <tag>display</tag>
+        <tag>imageMagick</tag>
+        <tag>X11</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[An error when install perl module: GD]]></title>
+    <url>%2F2018%2F08%2F15%2FAn-error-when-install-perl-module-GD%2F</url>
+    <content type="text"><![CDATA[BackgroundCircos is a very useful data visualization tool for genome or other genetic data. However, installing circos process is not easy for a bioinofmatics beginner or person without much coding knowledge. Circos depends many perl modules, like: Carp Clone Config::General Cwd Data::Dumper Digest::MD5 File::Basename File::Spec::Functions File::Temp FindBin Font::TTF::Font GD GD::Polyline Getopt::Long IO::File List::MoreUtils List::Util Math::Bezier Math::BigFloat Math::Round Math::VecStat Memoize POSIX Params::Validate Pod::Usage Readonly Regexp::Common SVG Set::IntSpan Statistics::Basic Storable Sys::Hostname Text::Balanced Text::Format Time::HiRes P.S. recommend to install Params::Validate last one. Errorfortunately, most of above can be install by cpan, but GD failed lots of time. everytime error like this: 123Package gdlib was not found in the pkg-config search path.Perhaps you should add the directory containing `gdlib.pc' to the PKG_CONFIG_PATH environment variableNo package 'gdlib' found Solvebecause GD module depends libgd, libgd is an open source code library for the dynamic creation of images by programmers. you mush install it first.see more: libgd 1234567wget https://github.com/libgd/libgd/releases/download/gd-2.2.5/libgd-2.2.5.tar.gztar zxvf libgd-2.2.5.tar.gzcd libgd-2.2.5./configure makemake installmake installcheck if you are not root, or you just want install for yourself, you need install add -prefix= 1234./configure -prefix=/home/yourname/localmakemake installmake installcheck then, you can use cpan to insall GD module.]]></content>
+      <categories>
+        <category>生物信息</category>
+      </categories>
+      <tags>
+        <tag>perl</tag>
+        <tag>circos</tag>
+        <tag>modules</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[circos-text-incomplete]]></title>
+    <url>%2F2018%2F07%2F30%2Fcircos-text-incomplete%2F</url>
+    <content type="text"><![CDATA[circos 图可以通过plot中的text功能增加基因名称或者注释文字，这是一个非常常用的功能，最近我在画一个线粒体基因组的circos图的时候，发现一直有基因名称显示不全，调试了很多版本和参数，都没有解决。后来通过仔细阅读官网的例子，发现有一个参数: label_snuggle , 需要将这个参数设置为’yes’这样的话可以在相近的文字有可能重叠的时候将他们分开，通过连线的方式将文字向外延伸。比如下面的两个例子。 example 1 example 2配置文件中增加：1234label_snuggle = yesmax_snuggle_distance = 1rsnuggle_tolerance = 0.25rsnuggle_sampling = 2 当然还有另外一种方法，那就是减小文字大小，当文字足够小就不会相互重叠了。 顺便安利一波自己写的脚本，可以根据注释好的genebank文件直接画circos图，包含基因结构，GC含量，以及深度信息（如果有给出深度信息）。链接地址]]></content>
+      <categories>
+        <category>生物信息</category>
+      </categories>
+      <tags>
+        <tag>circos</tag>
+        <tag>bio-software</tag>
+        <tag>plot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[从今天走的明天]]></title>
+    <url>%2F2018%2F02%2F21%2FFrom-today-to-tomrrow%2F</url>
+    <content type="text"><![CDATA[从今天走到明天我和黑夜在不同的世界里穿行两颗明亮的星星如影随形一颗风的灵感带着急迫击中了我 一瞬间的灵光乍现来不及回味上一秒的思绪我将其紧紧的封锁在一个包裹中悄悄的邮寄给你我想这样做 但即使是最快的快递也不能瞬间抵达，当然既然没有超自然的神力效劳那将他们吹向风中又何妨 远在千里的你是否闻到风中的气息看到两颗星的凝望]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[对象]]></title>
+    <url>%2F2018%2F01%2F06%2Fobject%2F</url>
+    <content type="text"><![CDATA[你若问我有没有对象我作如是答：我是Python的函数 hahaha~~~~]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[开普勒的天空]]></title>
+    <url>%2F2017%2F12%2F26%2FThe-sky-of-Kepler%2F</url>
+    <content type="text"><![CDATA[没有人能逃离这弯曲，就像没人可以跌落到天空，我们终极一生都在巨大的波浪里徜徉，即使是奋力的活着，也不会有任何波澜，重生的粒子也难寻前世的夙愿。多么可怕的寂静，没有了我，海洋依然平静，没有了你，我的曲率为零。]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[In the air]]></title>
+    <url>%2F2017%2F11%2F08%2FIn-the-air%2F</url>
+    <content type="text"><![CDATA[漂洋过海的飞机像一间巨大的婴儿室黑暗中等待新生奇怪的是这里的孩子从来不哭 将你的耳朵托运吧在登机之前哦，不！要留一只听空姐美丽的声音 在夜间的国际航班上，我专门要了一个靠边的座位以便伸出腿来，能勉强有个短暂的睡眠，但我并没有睡着，我被昏暗的灯光吸引，我探出头去打量周围的乘客，他们看起来睡得都很安详，身边不时有空姐走过，查看乘客的需要，这多么像一个大的婴儿室，只是特别的安静]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Sex-determination-system-XY]]></title>
+    <url>%2F2017%2F09%2F22%2FSex-determination-system-XY%2F</url>
+    <content type="text"><![CDATA[PDF下载链接]]></content>
+      <categories>
+        <category>文献阅读</category>
+      </categories>
+      <tags>
+        <tag>Seminar</tag>
+        <tag>sex-determination</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[逆流的风]]></title>
+    <url>%2F2017%2F09%2F06%2FThe-wind%2F</url>
+    <content type="text"><![CDATA[当风吹进墨里石头也被吹成了柔软雨水都往天上去了蝌蚪儿整齐的的码在泥潭中似乎在等待电影的开场]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[进化树也能顾盼生姿]]></title>
+    <url>%2F2017%2F08%2F02%2FMakeup-phylogentic-tree%2F</url>
+    <content type="text"><![CDATA[最近需要画一张包含进化树和不同基因GC含量的图，研究了一番，觉得用热力图表示GC含量比较合适一点。可以完成这项工作的工具其实有很多，今天主要分享两种比较常见和好用的工具，其一是ITOL网页版工具，其二是R里的ggtree包（Y叔出品，值得安利）。 ITOLITOL是一款非常强大的进化树注释，修饰，展示的工具，文章的摘要如下： Interactive Tree Of Life (http://itol.embl.de) is a web-based tool for the display, manipulation and annotation of phylogenetic trees. It is freely available and open to everyone. The current version was completely redesigned and rewritten, utilizing current web technologies for speedy and streamlined processing. Numerous new features were introduced and several new data types are now supported. Trees with up to 100,000 leaves can now be efficiently displayed. Full interactive control over precise positioning of various annotation features and an unlimited number of datasets allow the easy creation of complex tree visualizations. iTOL 3 is the first tool which supports direct visualization of the recently proposed phylogenetic placements format. Finally, iTOL’s account system has been redesigned to simplify the management of trees in user-defined workspaces and projects, as it is heavily used and currently handles already more than 500,000 trees from more than 10,000 individual users.]]></content>
+      <categories>
+        <category>生物信息</category>
+      </categories>
+      <tags>
+        <tag>phylogenetic tree</tag>
+        <tag>visulization</tag>
+        <tag>ITOL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[值得过的一生]]></title>
+    <url>%2F2017%2F07%2F24%2FA-good-life%2F</url>
+    <content type="text"><![CDATA[Three passions, simple but overwhelmingly strong, have governed my life: the longing for love, the search for knowledge, and unbearable pity for the suffering of mankind. These passions, like great winds, have blown me hither and thither, in a wayward course, over a great ocean of anguish, reaching to the very verge of despair. I have sought love, first, because it brings ecstasy - ecstasy so great that I would often have sacrificed all the rest of life for a few hours of this joy. I have sought it, next, because it relieves loneliness–that terrible loneliness in which one shivering consciousness looks over the rim of the world into the cold unfathomable lifeless abyss. I have sought it finally, because in the union of love I have seen, in a mystic miniature, the prefiguring vision of the heaven that saints and poets have imagined. This is what I sought, and though it might seem too good for human life, this is what–at last–I have found. With equal passion I have sought knowledge. I have wished to understand the hearts of men. I have wished to know why the stars shine. And I have tried to apprehend the Pythagorean power by which number holds sway above the flux. A little of this, but not much, I have achieved. Love and knowledge, so far as they were possible, led upward toward the heavens. But always pity brought me back to earth. Echoes of cries of pain reverberate in my heart. Children in famine, victims tortured by oppressors, helpless old people a burden to their sons, and the whole world of loneliness, poverty, and pain make a mockery of what human life should be. I long to alleviate this evil, but I cannot, and I too suffer. This has been my life. I have found it worth living, and would gladly live it again if the chance were offered me.]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>life</tag>
+        <tag>passions</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[配置bashrc简易教程]]></title>
+    <url>%2F2017%2F07%2F20%2FA-easy-guide-bashrc%2F</url>
+    <content type="text"><![CDATA[了解权限.bashrc文件, 路径/home/user/.bashrc注意前面有个“.”，表示隐藏文件,/etc/profile，/etc/bashrc 是系统全局环境变量设定,只有root管理员才有权限。~/.profile，~/.bashrc 用户home目录下的私有环境变量设定，为用户自己的，其他用户没有权限。 了解执行过程当登入系统时候获得一个shell进程时，其读取环境设定文档有三步: 首先读入的是全局环境变量设定档/etc/profile, 然后根据其内容读取额外的设定的文档，如/etc/profile.d和/etc/inputrc 然后根据不同使用者帐号，去其家目录读取~/.bash_profile, 如果这读取不了就读取~/.bash_login, 这个也读取不了才会读取~/.profile， 这三个文档设定基本上是一样的，读取有优先关系； 然后在根据用户帐号读取~/.bashrc 至于~/.profile 与~/.bashrc的不区别都具有个性化定制功能~/.profile可以设定本用户专有的路径，环境变量，等，它只能登入的时候执行一次 ~/.bashrc也是某用户专有设定文档，可以设定路径，命令别名，每次shell script的执行都会使用它一次,这个文件里面放你的环境变量，可以将常用的软件路径放到这里，这样就可以不用每次输入这个软件的全路径，另外还可以写很多快捷键（简写），比如alias work=‘cd /path/workdir’ 就直接进入了你的工作目录. 以下是常用的内容，仅供参考:123456789101112131415if [ -f /etc/bashrc ]; then. /etc/bashrc;fi# User specific aliases and functionsalias l='ls -lhrt --color'alias le='less -NS'alias la='ls --color -a'alias work='cd /yourpath'alias grep='grep --color=auto'alias top='top -u yourname'alias sbr='source ~/.bashrc'# PromotePS1='-------------------------------------\n\u@\h\A:\w\n\$ '# Color PromotePS1='\[\033[01;32m\] -------------------------------------------------------\[\033[00m\]\n$&#123;debian_chroot:+($debian_chroot)&#125;\ [\033[01;32m\]\u@\h \A\[\033[00m\]:\[\033[01;34m\] \w\[\033[00m\]\n\$ ' 为了每次登陆服务器时候都能正常加载这个.bashrc文件，你还需要另外一个文件告诉系统你要使用自己的.bashrc文件，所以需要一个文件叫：.bash_profile内容为:123456789# .bash_profile# Get the aliases and functionsif [ -f ~/.bashrc ]; then . ~/.bashrcfi# User specific environment and startup programsPATH=$PATH:$HOME/binexport PATH 同样需要source .bash_profile，此时，配置完成，可以退出再次登陆看看.]]></content>
+      <categories>
+        <category>常用工具</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>bashrc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[雨行走在三个人中]]></title>
+    <url>%2F2017%2F07%2F16%2FThree-in-rain%2F</url>
+    <content type="text"><![CDATA[脚踩着一团柔软风和雨把头埋的很低很低低到可以看到满地的月亮一遍遍地被揉碎在这河流里 训斥声从头顶传来我不敢抬头，心里默数着犯下的错误含羞草也收紧了枝叶不远处传来一缕清香那是九里香的味道我知道，我快到家了。]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[使用Getopt::Long变量赋值为0时的尴尬]]></title>
+    <url>%2F2017%2F07%2F14%2FGetopt-Long-error%2F</url>
+    <content type="text"><![CDATA[perl 使用 Getopt::Long 模块的时候，你想给两个参数设置默认值，比如：a,b参数, $a ||= 2， $b ||= 1 一眼看上去好像没什么问题。如果你不赋值给这两个参数，那么$a的值为2，$b为1. 但如果你想将a,b的值设置为0的时候，问题就来了：$a ||= 2， $b ||= 1 这样写实际的传递过程是：先判断“||”左边的值的真假，虽然你是已经给a,b赋值了，但是0会被判定为假，所以a, b的值仍然是2和1，你是不会得到你想要的结果的，这是个不大不小的坑。。。 修改方式： $a = 2 if (!defined $a)]]></content>
+      <categories>
+        <category>坑坑不息</category>
+      </categories>
+      <tags>
+        <tag>perl</tag>
+        <tag>Getopt::Long</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[insomnia in summer]]></title>
+    <url>%2F2017%2F05%2F13%2Finsomnia-in-summer%2F</url>
+    <content type="text"><![CDATA[夏日无眠蛙鸣汤沸不知倦，花开荼蘼夏日喧。只说无愁复入眠，辗转难寐数星峦。]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Poem-Part1]]></title>
+    <url>%2F2017%2F04%2F22%2FPoem-Part1%2F</url>
+    <content type="text"><![CDATA[你是人间的四月天（改写于Mar 13, 2011）原文： 我说 你是人间的四月天；笑响点亮了四面风；轻灵在春的光艳中交舞着变。你是四月早天里的云烟，黄昏吹着风的软，星子在无意中闪，细雨点洒在花前。那轻，那娉婷，你是，鲜妍百花的冠冕你戴着，你是天真，庄严，你是夜夜的月圆。雪化后那片鹅黄，你像；新鲜初放芽的绿，你是；柔嫩喜悦，水光浮动着你梦期待中白莲。你是一树一树的花开，是燕在梁间呢喃，——你是爱，是暖，是希望，你是人间的四月天！ 改写： 你是人间的四月天/光艳透着阳光的暖/眉波染了泉水的甜/你是清晨竹林的香烟/空明流动着影的暗/鸟雀在无意的听/雨露点点洒在花前/那轻，那聘婷，你是千湖的眼睛你藏着/你是天真庄严/你是夜夜的月圆/月塘中那斑斑点点,你像/水中欢快的游鱼，你是/顽童天仙/光浮着你梦中期待的田野/你是一树一树的花香/是燕/在梁间呢喃/是爱是暖是希望/你是人间的四月天！ 20110624《无题》残阳流朱水，暮霭接葳蕤。策鞭向代马，雄歌慨而慷。 毕业 11 May 2015离心的小岛上有一片晴空梦想将蓝天与你我拉得很近很近所有的风都向我们吹所有的日子都为我们歌唱轻轻地在你的耳边唤起六月的雨将如期而至匆匆的从你的指尖滑落九月的红叶将温婉凝重那时候风带给你我的讯息在那里新的岛上仍有一片温暖的晴空 寒夜 11 May 2015霜重柏头风压轻,房中水寒辗转冰。欲寄书怀兼尺素,便作青鸟云外传。 红桦的秘密 18 May 2015一双颤抖的手挖出那不堪的历史惊奇的发现文字依旧新鲜是什么能让纸张违背时间的意念灼伤我眼睛刺痛我的心房啊！伟大的预言家昨日的信未寄原来是在等明日二十岁的箴言 失眠是我的孪生兄弟失眠是我的孪生兄弟平时静悄悄只有思念我的时候才来看我 思念的爬虫 17 September 20151空空的脑袋和雨后的泥土一样思念像只蚯蚓爬向深邃的黑夜直到天晴2我在我的脑袋中爬行黑暗而孤独直到天晴一只雨后的蚯蚓 红色墓碑记 Oct. 2015于化日下，于黑暗里从不缺乏你骄傲的红色勋章静止是一切恩怨的开端或单枪匹马，或三三两两在黑暗和疲倦的掩护下奔赴沙场大千世界，你只钟情于红色的新鲜的蔬菜暗流涌动，你只作一瓢饮是什么让你坚定而无畏让你的敌人望而生畏是什么让你练就如此敏捷而优雅的身手无形无影我好心提示你贪婪是所有行为的坟墓而当你终于无视我而走开啊，朋友啊！在你身后印下的勋章不是血液而是我崩溃的内心 To Lisa June 2015嘱彼佳人，与我在此何幸于我，吾说吾视他人之心，岂如薄冰何谈我生，不视不见何幸于我，心之视之他人之心，岂如痍疮何幸于我，思之视之他人之心，何易于我何幸于我，佳人于我不视不见，何不于殆 诉说 2016?在无底的棉絮里穿行只等待坠入天堂的那一刻大地流淌着乳白的河河流在鲜血中起舞那开在天空的朵朵都是你前世遗留的帽子唯一不变的是高傲的龙骨穿越千古茶与马诉说着沧桑唯一不能说的是对这尘世的依恋但我可以悄悄地告诉你所有的秘密都在泸沽 Our poem (By Lisa) June 2015if i were a Chinese poet I’d create a new symbol for our friendshipwhich would be pronounced like the sound of our laughtersand i would carve it in a thousand seedsto plant them and watch them grow strong and straightand everyone who eats their fruits to ease their hungerwill taste the sweetness of our memories and dreamsif i were a preacher , I’d teach our symboli would make a school of the art of writing itand i would carve it in a thousand stonesto pave the way to unexplored breadth -taking landsand everyone who walks their path will want to runand will be able to find their way to our warm home 清明游荔湾湖 4 April 2017两叶扁舟荡，晴日荔园新。惜落木棉意，欢心未可知。]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[更改fasta序列每一行显示的碱基数目]]></title>
+    <url>%2F2017%2F04%2F15%2FWapper-fasta%2F</url>
+    <content type="text"><![CDATA[一个Perl小程序1234567891011121314151617181920#!/usr/bin/perl -wuse strict;die "perl $0 &lt;*.fa&gt; &lt;number of one line&gt;" unless (@ARGV == 2) ;my $genome=shift;my $num = shift;open (IN,$genome) or die $!;$/="&gt;";&lt;IN&gt;;$/="\n";while (&lt;IN&gt;) &#123; chomp; my $id = $_; print "&gt;$id\n"; $/="&gt;"; my $seq=&lt;IN&gt;; chomp $seq; $seq =~ s/\n//g; 1 while $seq =~ s/(\w&#123;$num&#125;)(\w+)$/$1\n$2/; print "$seq\n"; $/="\n";&#125;close IN;]]></content>
+      <categories>
+        <category>生物信息</category>
+      </categories>
+      <tags>
+        <tag>perl</tag>
+        <tag>fasta</tag>
+        <tag>wapper</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[春日袭雾]]></title>
+    <url>%2F2017%2F03%2F22%2FThe-fog-in-spring%2F</url>
+    <content type="text"><![CDATA[春日袭雾花寻山涧中， 鸟鸣绿屏踪。 雾散苔痕近， 似有人问gene。]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[孤独]]></title>
+    <url>%2F2017%2F02%2F21%2Flonely%2F</url>
+    <content type="text"><![CDATA[孤独孤独这两个字拆开看，有小孩，有水果，有走兽，有蚊蝇，足以撑起一个盛夏傍晚的巷子口，人味十足。夏日的傍晚，你看着嗡嗡飞舞的蝇虫，不远处的狗摇着尾巴穿巷而过，你手中拿着吃剩下的半块西瓜，忽然觉得过了半辈子，又好像只过了半分钟。 在朋友的一篇文章中看到的，觉得这段文字十分的美！click here =&gt; 好日子会闪闪发光]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>longliness</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Temptation of Book]]></title>
+    <url>%2F2017%2F02%2F14%2FTemptation-of-Book%2F</url>
+    <content type="text"><![CDATA[无法与你在深夜里对视像不能直视精绝女王的眼睛一个音符的休止也是因你引入迷途没人知道你是磁铁，你是巨大的黑洞就像死人永远不能说出死后去往了何处只有这消静谧为你蒙上一层面纱于是，我在那一瞬的光中便失去了挣扎的力量]]></content>
+      <categories>
+        <category>诗文杂趣</category>
+      </categories>
+      <tags>
+        <tag>poem</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[No such thing]]></title>
+    <url>%2F2016%2F11%2F15%2FNo-such-thing%2F</url>
+    <content type="text"><![CDATA[Today I gonna recommend a John Maryer‘s song: &lt;&lt; No such thing &gt;&gt; you can feel a kind of bad,cool,pride and something like a wild wind in the spring sunny day. Totally I like that words: I’d like to think the best of meIs still hidingUp my sleeve Following is scripts: ＂Welcome to the real world＂, she said to meCondescendinglyTake a seatTake your lifePlot it out in black and whiteWell I never lived the dreams of the prom kingsAnd the drama queensI’d like to think the best of meIs still hidingUp my sleeve They love to tell youStay inside the linesBut something’s betterOn the other side I wanna run through the halls of my high schoolI wanna scream at theTop of my lungsI just found out there’s no such thing as the real worldJust a lie you’ve got to rise above So the good boys and girls take the so called right trackFaded white hatsGrabbing creditsMaybe transfersThey read all the books but they can’t find the answersAnd all of our parentsThey’re getting olderI wonder if they’ve wished for anything betterWhile in their memoriesTiny tragediesThey love to tell youStay inside the linesBut something’s betterOn the other side I wanna run through the halls of my high schoolI wanna scream at theTop of my lungsI just found out there’s no such thing as the real worldJust a lie you’ve got to rise above I am invincibleI am invincibleI am invincibleAs long as I’m alive I wanna run through the halls of my high schoolI wanna scream at theTop of my lungsI just found out there’s no such thing as the real worldJust a lie you’ve got to rise above I just can’t wait til my 10 year reunionI’m gonna bust down the double doorsAnd when I stand on these tables before youYou will know what all this time was for]]></content>
+      <categories>
+        <category>兴趣爱好</category>
+      </categories>
+      <tags>
+        <tag>music</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[To make a mountain out of a molehill]]></title>
+    <url>%2F2016%2F11%2F15%2FTo-make-a-mountain-out-of-a-molehill%2F</url>
+    <content type="text"><![CDATA[This is from BBC Authentic Real English To make a mountain out of a molehill 小题大做 我们多用这个表达来形容某人把一件小事故意扩大，使其看起来比实际的糟糕. Examples:I only asked him to do the shopping and now he’s going on about how he has no time to go to the pub – he’s making a mountain out of a molehill. It’s only a 2000 word essay; stop making a mountain out of a molehill!]]></content>
+      <categories>
+        <category>地道英语</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[In the blink of an eye]]></title>
+    <url>%2F2016%2F11%2F14%2FIn-the-blink-of-an-eye%2F</url>
+    <content type="text"><![CDATA[This is from BBC Authentic Real English In the blink of an eye 一眨眼之间 ExamplesMy new computer can download a large video in the blink of an eye. We were so tired after the party, everyone was fast asleep in the blink of an eye. Sarah couldn’t believe that the first two years of university went in the blink of an eye. 这个表达也常用来形容变化来得非常快。有时候会被缩写为 in a blink。e.g.: A 70-story skyscraper just rose from the ground in a blink. I couldn’t believe the transformation in Sarah; she went from a shy sixteen-year-old with braces to an outspoken youth MP in a blink.]]></content>
+      <categories>
+        <category>地道英语</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Shedloads]]></title>
+    <url>%2F2016%2F11%2F12%2FShedloads%2F</url>
+    <content type="text"><![CDATA[This is from BBC Authentic Real English Shedloads 大量 许多 ‘A shedload’ just means ‘a lot’. So, ‘a shedload of something’ is ‘a very large amount or number of something’. shedloads of ExamplesJim gets paid shedloads of money, so don’t worry, I’m sure he can afford it. We don’t need to go out for dinner tonight; we’ve got a shedload of food in the fridge! We can also use ‘shedload’ or ‘shedloads’ without ‘of’ if it’s clear what we’re talking about. a shedload / shedloads ExamplesHe spent shedloads on his new car. I can’t go anywhere. I’ve got shedloads to do today.]]></content>
+      <categories>
+        <category>地道英语</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Get someone's goat]]></title>
+    <url>%2F2016%2F11%2F11%2FGet-someone-s-goat%2F</url>
+    <content type="text"><![CDATA[This is from BBC Authentic Real English Get someone’s goat 火冒三丈 ExamplesThese queues at the post office really get my goat. I’ve been waiting for half an hour! Argh, I don’t believe it – I’ve got a parking ticket! Traffic wardens really get my goat! These calls from people selling insurance get my goat. They’ve rung seven times already this morning. To get somebody’s goat – an expression you can use when something annoys you. 注意，我们通常会在这个表达前用 really 来加强语气。比如 Train delays really get my goat. 火车延误特别让我恼火。]]></content>
+      <categories>
+        <category>地道英语</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Knee-jerk reaction]]></title>
+    <url>%2F2016%2F11%2F10%2FKnee-jerk-reaction%2F</url>
+    <content type="text"><![CDATA[This is from BBC Authentic Real English Knne-jerk reaction 本能反应 Examples:We’ve got an expression which means to react to something without thinking about it carefully first. Acting automatically, without thinking about it with consequences.]]></content>
+      <categories>
+        <category>地道英语</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Wash your dirty linen in public]]></title>
+    <url>%2F2016%2F11%2F10%2FWash-your-dirty-linen-in-public%2F</url>
+    <content type="text"><![CDATA[This is from BBC Authentic Real English wash your dirty linen in public 家丑外扬 Exampls:Tim kept discussing his brother’s drinking problem in the pub but I told him not to wash his dirty linen in public. I know he’s having an affair but do they have to wash their dirty linen in public? Don’t wash your dirty linen in public, save your argument for when you get home. You won’t hear people washing their dirty linen in public - either literally or metaphorically.]]></content>
+      <categories>
+        <category>地道英语</category>
+      </categories>
+      <tags>
+        <tag>English</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[The First One]]></title>
+    <url>%2F2016%2F11%2F05%2FThe-First-One%2F</url>
+    <content type="text"><![CDATA[Backgrounding Today is really a remarkable day because I finally set up my personal blog website, which is an item lying in my plan for a long time. I find it is not so difficult to put it into practice, then I just chew some online post carefully, with just half a day on the basic deployment. So do it, writing your idea down if you are like me.I look forward to the maximum of this blog is to record and inspire, recording my own inspirational ideas, whether it is about technology, politics, history, and even the fantasy, delusion, illusion, and some experiences in work routine, learning issues and the problems; I wish there is spark on accumulating after, and have a new eyesight out of technology itself.On the other hand, I want to adhere to originality. It is better to write down my own “outputs”, idea, thinking, scripts, the translation of things, of course, some necessary record issues will be recorded in it too, such as the English expression picked up, so those articles will be classified by classification tags: 1) Thinking2) Scripts3) Bio-Software-Using(BSU)4) Reading5) Learning6) … However, time will change something.]]></content>
+      <categories>
+        <category>杂七杂八</category>
+      </categories>
+      <tags>
+        <tag>review</tag>
+      </tags>
+  </entry>
+</search>
