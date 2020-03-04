@@ -1,0 +1,80 @@
+algolia_search:
+android_chrome_color: "#222"
+auto_excerpt:
+avatar: https://github.com/comery/comery.github.io/tree/master/uploads/avatar.png
+baidu_push: true
+baidusitemap:
+bookmark:
+busuanzi_count:
+cache:
+calendar:
+canonical: true
+canvas_lines: false
+canvas_nest: false
+canvas_ribbon:
+canvas_sphere: false
+changyan:
+cheers_enabled: true
+codeblock:
+css: css
+custom_logo:
+disqus:
+excerpt_description: false
+exturl: false
+facebook_comments_plugin:
+facebook_sdk:
+fancybox: true
+fastclick: true
+favicon:
+firestore:
+font:
+footer:
+github_banner: https://github.com/comery || Follow me on GitHub
+gitment:
+han: false
+highlight_theme: night eighties
+images: images
+index_with_subtitle: false
+js: js
+label: true
+lazyload: false
+leancloud_visitors:
+links:
+links_icon: link
+links_layout: block
+links_title: Links
+local_search:
+math:
+menu:
+menu_settings:
+mobile_layout_economy: false
+motion:
+needmoreshare2:
+note:
+override: false
+pace: true
+pace_theme: pace-theme-flash
+pangu: false
+plugins:
+post_copyright:
+post_edit:
+post_meta:
+rating:
+reading_progress:
+related_posts:
+rss:
+save_scroll: false
+scheme: Gemini
+scroll_to_more: false
+seo: false
+sidebar:
+site_state: true
+social:
+social_icons:
+symbols_count_time:
+tabs:
+three_waves: false
+toc:
+valine:
+vendors:
+vkontakte_api:
