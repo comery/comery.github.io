@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>http://comery.github.io/2020/01/16/linux-command-split-for-transfering-data/</loc>
+    <lastmod>2020-03-04T12:10:34.753Z</lastmod>
+    <data>
+        <display>
+        <title>linux command split for transfering data</title>
+        <pubTime>2020-01-16T15:04:06.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+        <tag>split</tag>
+         
+        <tag>transfer</tag>
+         
+        <tag>bam</tag>
+         
+         
+           
+             
+              <breadCrumb title="常用工具" url="http://comery.github.io/categories/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2020/03/04/log-in-cluster-using-a-interactive-way/</loc>
+    <lastmod>2020-03-04T12:10:26.197Z</lastmod>
+    <data>
+        <display>
+        <title>log in cluster using a interactive way</title>
+        <pubTime>2020-03-03T23:19:33.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+        <tag>expect</tag>
+         
+        <tag>ssh</tag>
+         
+         
+           
+             
+              <breadCrumb title="常用工具" url="http://comery.github.io/categories/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2016/11/05/The-First-One/</loc>
+    <lastmod>2020-01-16T16:51:16.265Z</lastmod>
+    <data>
+        <display>
+        <title>The First One</title>
+        <pubTime>2016-11-04T16:09:12.000Z</pubTime>
+        
+        <tag>review</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂七杂八" url="http://comery.github.io/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2018/09/15/Single-cell-sequencing/</loc>
+    <lastmod>2020-01-16T16:51:05.656Z</lastmod>
+    <data>
+        <display>
+        <title>Single-cell-sequencing</title>
+        <pubTime>2018-09-15T14:47:29.000Z</pubTime>
+        
+        <tag>Seminar</tag>
+         
+        <tag>Learning</tag>
+         
+         
+           
+             
+              <breadCrumb title="文献阅读" url="http://comery.github.io/categories/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2019/01/29/I-buy-a-domain-name-for-my-blog/</loc>
+    <lastmod>2020-01-16T16:50:48.241Z</lastmod>
+    <data>
+        <display>
+        <title>I buy a domain name for my blog</title>
+        <pubTime>2019-01-28T19:36:41.000Z</pubTime>
+        
+        <tag>blog</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂七杂八" url="http://comery.github.io/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2018/08/27/Get-Wikipedia-page-using-python/</loc>
+    <lastmod>2020-01-16T16:50:27.215Z</lastmod>
+    <data>
+        <display>
+        <title>Get Wikipedia page using python</title>
+        <pubTime>2018-08-26T19:05:02.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>wikipedia</tag>
+         
+        <tag>crawler</tag>
+         
+         
+           
+             
+              <breadCrumb title="常用工具" url="http://comery.github.io/categories/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2018/08/23/BUG-diamond-of-parsering-xml-result/</loc>
+    <lastmod>2020-01-16T16:47:43.722Z</lastmod>
+    <data>
+        <display>
+        <title>[BUG]-diamond of parsering xml result</title>
+        <pubTime>2018-08-23T11:16:04.000Z</pubTime>
+        
+        <tag>bio-software</tag>
+         
+        <tag>diamond</tag>
+         
+        <tag>blast2GO</tag>
+         
+         
+           
+             
+              <breadCrumb title="坑坑不息" url="http://comery.github.io/categories/%E5%9D%91%E5%9D%91%E4%B8%8D%E6%81%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/04/15/Wapper-fasta/</loc>
+    <lastmod>2020-01-16T16:47:12.370Z</lastmod>
+    <data>
+        <display>
+        <title>更改fasta序列每一行显示的碱基数目</title>
+        <pubTime>2017-04-14T16:44:23.000Z</pubTime>
+        
+        <tag>perl</tag>
+         
+        <tag>fasta</tag>
+         
+        <tag>wapper</tag>
+         
+         
+           
+             
+              <breadCrumb title="生物信息" url="http://comery.github.io/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/09/22/Sex-determination-system-XY/</loc>
+    <lastmod>2020-01-16T16:46:00.045Z</lastmod>
+    <data>
+        <display>
+        <title>Sex-determination-system-XY</title>
+        <pubTime>2017-09-21T17:41:54.000Z</pubTime>
+        
+        <tag>Seminar</tag>
+         
+        <tag>sex-determination</tag>
+         
+         
+           
+             
+              <breadCrumb title="文献阅读" url="http://comery.github.io/categories/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2016/11/15/No-such-thing/</loc>
+    <lastmod>2020-01-16T16:44:52.050Z</lastmod>
+    <data>
+        <display>
+        <title>No such thing</title>
+        <pubTime>2016-11-14T23:25:46.000Z</pubTime>
+        
+        <tag>music</tag>
+         
+         
+           
+             
+              <breadCrumb title="兴趣爱好" url="http://comery.github.io/categories/%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/08/02/Makeup-phylogentic-tree/</loc>
+    <lastmod>2020-01-16T16:44:37.877Z</lastmod>
+    <data>
+        <display>
+        <title>进化树也能顾盼生姿</title>
+        <pubTime>2017-08-02T10:22:38.000Z</pubTime>
+        
+        <tag>phylogenetic tree</tag>
+         
+        <tag>visulization</tag>
+         
+        <tag>ITOL</tag>
+         
+         
+           
+             
+              <breadCrumb title="生物信息" url="http://comery.github.io/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/02/21/lonely/</loc>
+    <lastmod>2020-01-16T16:43:44.347Z</lastmod>
+    <data>
+        <display>
+        <title>孤独</title>
+        <pubTime>2017-02-21T13:14:20.000Z</pubTime>
+        
+        <tag>longliness</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/07/14/Getopt-Long-error/</loc>
+    <lastmod>2020-01-16T16:42:36.887Z</lastmod>
+    <data>
+        <display>
+        <title>使用Getopt::Long变量赋值为0时的尴尬</title>
+        <pubTime>2017-07-13T23:26:06.000Z</pubTime>
+        
+        <tag>perl</tag>
+         
+        <tag>Getopt::Long</tag>
+         
+         
+           
+             
+              <breadCrumb title="坑坑不息" url="http://comery.github.io/categories/%E5%9D%91%E5%9D%91%E4%B8%8D%E6%81%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2018/07/30/circos-text-incomplete/</loc>
+    <lastmod>2020-01-16T16:39:51.470Z</lastmod>
+    <data>
+        <display>
+        <title>circos-text-incomplete</title>
+        <pubTime>2018-07-29T23:31:54.000Z</pubTime>
+        
+        <tag>circos</tag>
+         
+        <tag>bio-software</tag>
+         
+        <tag>plot</tag>
+         
+         
+           
+             
+              <breadCrumb title="生物信息" url="http://comery.github.io/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/07/24/A-good-life/</loc>
+    <lastmod>2020-01-16T16:39:19.774Z</lastmod>
+    <data>
+        <display>
+        <title>值得过的一生</title>
+        <pubTime>2017-07-24T10:44:11.000Z</pubTime>
+        
+        <tag>life</tag>
+         
+        <tag>passions</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2016/11/10/Wash-your-dirty-linen-in-public/</loc>
+    <lastmod>2020-01-16T16:38:34.180Z</lastmod>
+    <data>
+        <display>
+        <title>Wash your dirty linen in public</title>
+        <pubTime>2016-11-09T21:35:45.000Z</pubTime>
+        
+        <tag>English</tag>
+         
+         
+           
+             
+              <breadCrumb title="地道英语" url="http://comery.github.io/categories/%E5%9C%B0%E9%81%93%E8%8B%B1%E8%AF%AD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2016/11/15/To-make-a-mountain-out-of-a-molehill/</loc>
+    <lastmod>2020-01-16T16:38:25.005Z</lastmod>
+    <data>
+        <display>
+        <title>To make a mountain out of a molehill</title>
+        <pubTime>2016-11-14T22:38:48.000Z</pubTime>
+        
+        <tag>English</tag>
+         
+         
+           
+             
+              <breadCrumb title="地道英语" url="http://comery.github.io/categories/%E5%9C%B0%E9%81%93%E8%8B%B1%E8%AF%AD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/07/16/Three-in-rain/</loc>
+    <lastmod>2020-01-16T16:38:15.812Z</lastmod>
+    <data>
+        <display>
+        <title>雨行走在三个人中</title>
+        <pubTime>2017-07-15T21:20:16.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/09/06/The-wind/</loc>
+    <lastmod>2020-01-16T16:38:08.270Z</lastmod>
+    <data>
+        <display>
+        <title>逆流的风</title>
+        <pubTime>2017-09-06T01:26:13.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/12/26/The-sky-of-Kepler/</loc>
+    <lastmod>2020-01-16T16:38:00.503Z</lastmod>
+    <data>
+        <display>
+        <title>开普勒的天空</title>
+        <pubTime>2017-12-25T17:51:19.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/03/22/The-fog-in-spring/</loc>
+    <lastmod>2020-01-16T16:37:51.183Z</lastmod>
+    <data>
+        <display>
+        <title>春日袭雾</title>
+        <pubTime>2017-03-21T19:22:35.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/02/14/Temptation-of-Book/</loc>
+    <lastmod>2020-01-16T16:37:42.370Z</lastmod>
+    <data>
+        <display>
+        <title>Temptation of Book</title>
+        <pubTime>2017-02-13T23:17:23.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2016/11/12/Shedloads/</loc>
+    <lastmod>2020-01-16T16:37:32.507Z</lastmod>
+    <data>
+        <display>
+        <title>Shedloads</title>
+        <pubTime>2016-11-11T23:41:47.000Z</pubTime>
+        
+        <tag>English</tag>
+         
+         
+           
+             
+              <breadCrumb title="地道英语" url="http://comery.github.io/categories/%E5%9C%B0%E9%81%93%E8%8B%B1%E8%AF%AD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2019/01/28/set-a-flag-for-2019/</loc>
+    <lastmod>2020-01-16T16:37:23.771Z</lastmod>
+    <data>
+        <display>
+        <title>Set a flag for 2019</title>
+        <pubTime>2019-01-28T11:48:32.000Z</pubTime>
+        
+        <tag>flag</tag>
+         
+         
+           
+             
+              <breadCrumb title="杂七杂八" url="http://comery.github.io/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/04/22/Poem-Part1/</loc>
+    <lastmod>2020-01-16T16:37:10.088Z</lastmod>
+    <data>
+        <display>
+        <title>Poem-Part1</title>
+        <pubTime>2017-04-22T10:11:29.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2018/01/06/object/</loc>
+    <lastmod>2020-01-16T16:37:00.190Z</lastmod>
+    <data>
+        <display>
+        <title>对象</title>
+        <pubTime>2018-01-06T11:18:46.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2016/11/10/Knee-jerk-reaction/</loc>
+    <lastmod>2020-01-16T16:36:50.777Z</lastmod>
+    <data>
+        <display>
+        <title>Knee-jerk reaction</title>
+        <pubTime>2016-11-10T08:50:12.000Z</pubTime>
+        
+        <tag>English</tag>
+         
+         
+           
+             
+              <breadCrumb title="地道英语" url="http://comery.github.io/categories/%E5%9C%B0%E9%81%93%E8%8B%B1%E8%AF%AD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2018/11/07/Mitochondrioal-genome-assembly-appraches/</loc>
+    <lastmod>2020-01-16T16:36:41.901Z</lastmod>
+    <data>
+        <display>
+        <title>Mitochondrioal genome assembly appraches</title>
+        <pubTime>2018-11-06T20:48:13.000Z</pubTime>
+        
+        <tag>bio-software</tag>
+         
+        <tag>mitochondrion</tag>
+         
+        <tag>assembly</tag>
+         
+         
+           
+             
+              <breadCrumb title="生物信息" url="http://comery.github.io/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/05/13/insomnia-in-summer/</loc>
+    <lastmod>2020-01-16T16:35:57.944Z</lastmod>
+    <data>
+        <display>
+        <title>insomnia in summer </title>
+        <pubTime>2017-05-12T23:13:30.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2016/11/14/In-the-blink-of-an-eye/</loc>
+    <lastmod>2020-01-16T16:35:48.603Z</lastmod>
+    <data>
+        <display>
+        <title>In the blink of an eye</title>
+        <pubTime>2016-11-13T23:17:43.000Z</pubTime>
+        
+        <tag>English</tag>
+         
+         
+           
+             
+              <breadCrumb title="地道英语" url="http://comery.github.io/categories/%E5%9C%B0%E9%81%93%E8%8B%B1%E8%AF%AD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/11/08/In-the-air/</loc>
+    <lastmod>2020-01-16T16:35:38.001Z</lastmod>
+    <data>
+        <display>
+        <title>In the air</title>
+        <pubTime>2017-11-07T22:35:16.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2019/05/26/Hackathon/</loc>
+    <lastmod>2020-01-16T16:34:49.470Z</lastmod>
+    <data>
+        <display>
+        <title>Hackathon</title>
+        <pubTime>2019-05-25T23:44:39.000Z</pubTime>
+        
+        <tag>bio-software</tag>
+         
+        <tag>mitoz</tag>
+         
+        <tag>coding</tag>
+         
+         
+           
+             
+              <breadCrumb title="生物信息" url="http://comery.github.io/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2016/11/11/Get-someone-s-goat/</loc>
+    <lastmod>2020-01-16T16:34:26.295Z</lastmod>
+    <data>
+        <display>
+        <title>Get someone's goat</title>
+        <pubTime>2016-11-10T22:48:15.000Z</pubTime>
+        
+        <tag>English</tag>
+         
+         
+           
+             
+              <breadCrumb title="地道英语" url="http://comery.github.io/categories/%E5%9C%B0%E9%81%93%E8%8B%B1%E8%AF%AD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2018/02/21/From-today-to-tomrrow/</loc>
+    <lastmod>2020-01-16T16:33:35.040Z</lastmod>
+    <data>
+        <display>
+        <title>从今天走的明天</title>
+        <pubTime>2018-02-21T00:30:38.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2019/07/09/Estimation-of-species-divergence-times-usingusing-protein-sequences-by-mcmctree/</loc>
+    <lastmod>2020-01-16T16:33:16.307Z</lastmod>
+    <data>
+        <display>
+        <title>Estimation of species divergence times usingusing protein sequences by mcmctree</title>
+        <pubTime>2019-07-09T10:10:23.000Z</pubTime>
+        
+        <tag>bio-software</tag>
+         
+        <tag>phylogenetic tree</tag>
+         
+        <tag>mcmctree</tag>
+         
+        <tag>codeml</tag>
+         
+         
+           
+             
+              <breadCrumb title="生物信息" url="http://comery.github.io/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2019/01/25/compare-three-methods-to-parse-fasta-using-python/</loc>
+    <lastmod>2020-01-16T16:31:49.803Z</lastmod>
+    <data>
+        <display>
+        <title>compare three methods to parse fasta using python</title>
+        <pubTime>2019-01-24T23:14:56.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>fasta</tag>
+         
+        <tag>reverse &amp; complement</tag>
+         
+         
+           
+             
+              <breadCrumb title="生物信息" url="http://comery.github.io/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2018/08/22/can-not-find-libMagickCore-6-Q16-so-2/</loc>
+    <lastmod>2020-01-16T16:30:40.788Z</lastmod>
+    <data>
+        <display>
+        <title>Can not find libMagickCore-6.Q16.so.2</title>
+        <pubTime>2018-08-22T14:17:38.000Z</pubTime>
+        
+        <tag>linux</tag>
+         
+        <tag>display</tag>
+         
+        <tag>imageMagick</tag>
+         
+        <tag>X11</tag>
+         
+         
+           
+             
+              <breadCrumb title="常用工具" url="http://comery.github.io/categories/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2018/08/15/An-error-when-install-perl-module-GD/</loc>
+    <lastmod>2020-01-16T16:28:30.726Z</lastmod>
+    <data>
+        <display>
+        <title>An error when install perl module: GD</title>
+        <pubTime>2018-08-15T14:58:12.000Z</pubTime>
+        
+        <tag>perl</tag>
+         
+        <tag>circos</tag>
+         
+        <tag>modules</tag>
+         
+         
+           
+             
+              <breadCrumb title="生物信息" url="http://comery.github.io/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2019/01/25/A-guide-to-volleyball-beginner/</loc>
+    <lastmod>2020-01-16T16:27:33.737Z</lastmod>
+    <data>
+        <display>
+        <title>A guide to volleyball beginner</title>
+        <pubTime>2019-01-24T19:49:55.000Z</pubTime>
+        
+        <tag>Volleyball</tag>
+         
+        <tag>training</tag>
+         
+         
+           
+             
+              <breadCrumb title="兴趣爱好" url="http://comery.github.io/categories/%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2017/07/20/A-easy-guide-bashrc/</loc>
+    <lastmod>2020-01-16T16:26:52.701Z</lastmod>
+    <data>
+        <display>
+        <title>配置bashrc简易教程</title>
+        <pubTime>2017-07-19T17:48:20.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>bashrc</tag>
+         
+         
+           
+             
+              <breadCrumb title="常用工具" url="http://comery.github.io/categories/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2018/12/16/a-bug-of-import-reference-from-google-scholar-using-endnote-fromat/</loc>
+    <lastmod>2020-01-16T16:25:47.802Z</lastmod>
+    <data>
+        <display>
+        <title>A bug of import reference from google scholar using endnote fromat</title>
+        <pubTime>2018-12-16T14:15:12.000Z</pubTime>
+        
+        <tag>paper</tag>
+         
+        <tag>endnote</tag>
+         
+         
+           
+             
+              <breadCrumb title="文献阅读" url="http://comery.github.io/categories/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://comery.github.io/2020/01/12/Look-across/</loc>
+    <lastmod>2020-01-16T16:24:10.458Z</lastmod>
+    <data>
+        <display>
+        <title>隔岸相望</title>
+        <pubTime>2020-01-11T23:08:46.000Z</pubTime>
+        
+        <tag>poem</tag>
+         
+         
+           
+             
+              <breadCrumb title="诗文杂趣" url="http://comery.github.io/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+    
+</urlset>
