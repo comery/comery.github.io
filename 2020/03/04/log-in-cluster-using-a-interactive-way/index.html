@@ -1,37 +1,264 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="学习总结 思考感悟 知识管理">
+  
+  <title>
+    log in cluster using a interactive way |
+    
+    Carpe&#39;s Garden
+  </title>
+  <!-- Icon -->
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+  
+<link rel="stylesheet" href="/css/style.css">
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
-{% block page_class %}page-post-detail{% endblock %}
+  
+  
+<script src="/js/pace.min.js"></script>
 
+<meta name="generator" content="Hexo 6.3.0"></head>
 
-{% block content %}
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-log-in-cluster-using-a-interactive-way" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h1 class="article-title" itemprop="name">
+    log in cluster using a interactive way
+  </h1>
+  
+  
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/03/04/log-in-cluster-using-a-interactive-way/" class="article-date">
+  <time datetime="2020-03-03T23:19:33.000Z" itemprop="datePublished">2020-03-03</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/">常用工具</a>
+</div>
+
     </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <p>也不知道公司的集群为什么就开始使用双向验证的，自从有了这东西，每天到公司除了打开电脑，输入ssh的快捷键，输入密码之后，就得掏出手机看看验证码，有时候要是眼花还得多输几遍，真是欲哭无泪，太tm浪费时间了， 上传下载文件更是如此，长此以往，记数字的能力都给提高了，记忆力都被迫营业了。</p>
+<p>不过活人总不能被尿给憋死，上周师弟分享了一个expect语言交互式登录的方法，今天有空来试一下，试完感觉是： 真香！</p>
+<p>他的博客原文在这：&#x3D;&gt; <a target="_blank" rel="noopener" href="https://nonewood.github.io/2019/10/25/Mac-Authenticator-md/">link</a></p>
+<h4 id="一键登录"><a href="#一键登录" class="headerlink" title="一键登录"></a>一键登录</h4><p>总结一下，主要是两个方面：</p>
+<ul>
+<li>实现用电脑端就能收到验证码，另外需要在系统层面捕获到验证码序列，这个前人已经做了，我们只需要”拿来主义“， 这里主要是讲Mac上的方式，Win在文章中也有提到相应的软件，这里不再赘述。首先下载GoldenPassport.zip 然后解压，移动到Applications里面，因为不是官方软件所以需要你去system里面授权使用；开始运行之后在状态栏就有一个小图标，点击添加，将你的个人身份链接加进去，或者从二维码识别添加。然后就搞定了。</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jasondan/p/6508249.html">https://www.cnblogs.com/jasondan/p/6508249.html</a><br><a target="_blank" rel="noopener" href="https://github.com/stanzhai/GoldenPassport">https://github.com/stanzhai/GoldenPassport</a></p>
+</blockquote>
+<ul>
+<li>现在电脑已经可以接受验证码了，上面的软件是通过HTTP的方式给其他程序调用。那我们怎么接收验证码并实现自动登录呢？可以使用expect语言编写脚本获取验证码，实现交互式登录，具体脚本如下：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/usr/bin/expect -f</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">xxxx is your account</span></span><br><span class="line">  set user xxxx </span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">your IP address</span></span><br><span class="line">  set host IP </span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">xxxx is your passsword</span></span><br><span class="line">  set password xxxx </span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">get the verfication code from the <span class="built_in">local</span> host; 在 expect 脚本里边使用 shell 命令； grep 捕获变量；</span></span><br><span class="line">  set code [exec sh -c &#123;curl -s &quot;http://localhost:17304&quot; |grep -Eo &quot;\d&#123;6&#125;&quot;&#125;] </span><br><span class="line">  set timeout -1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">防止窗口串行</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">trap</span> sigwinch spawned</span></span><br><span class="line"> trap &#123;</span><br><span class="line">  set rows [stty rows]</span><br><span class="line">  set cols [stty columns]</span><br><span class="line">  stty rows $rows columns $cols &lt; $spawn_out(slave,name)</span><br><span class="line"> &#125; WINCH</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  spawn ssh $user@$host</span><br><span class="line">  expect &quot;*assword:*&quot;</span><br><span class="line">  send &quot;$password\r&quot;</span><br><span class="line">  expect &quot;*erification code:*&quot;</span><br><span class="line">  send &quot;$code\r&quot;</span><br><span class="line">  interact</span><br></pre></td></tr></table></figure>
+
+<p>将上述脚本保存到文件，修改必要的参数为自己的信息，并<code>chmod +x script</code>添加执行权限，另外你需要检查一下电脑有没有expect语言，没有到话用<code>brew install expect</code>安装一下；然后就可以一键登录了。</p>
+<h4 id="上下传文件"><a href="#上下传文件" class="headerlink" title="上下传文件"></a>上下传文件</h4><p>和上面的登录类似的，可以实现文件的自由下载；</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/usr/bin/expect -f</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">the file need scp</span> </span><br><span class="line"> set src_file [lindex $argv 0] </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">the target directory</span> </span><br><span class="line"> set dest_dir [lindex $argv 1] </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">xxxx is your account</span></span><br><span class="line"> set user xxxx </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">your IP address</span></span><br><span class="line"> set host IP  </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">xxxx is your passsword</span></span><br><span class="line"> set password xxxx </span><br><span class="line"> set code [exec sh -c &#123;curl -s &quot;http://localhost:17304&quot; |grep -Eo &quot;\d&#123;6&#125;&quot;&#125;]</span><br><span class="line"> set timeout -1</span><br><span class="line"></span><br><span class="line"> spawn scp -r $user@$host:$src_file $dest_dir</span><br><span class="line"> expect &quot;*assword:&quot;</span><br><span class="line"> send &quot;$password\r&quot;</span><br><span class="line"> expect &quot;*erification code:*&quot;</span><br><span class="line"> send &quot;$code\r&quot;</span><br><span class="line"> expect &quot;100%&quot;</span><br></pre></td></tr></table></figure>
+<p> 这里面有个小坑就是，上面的两个脚本在写的时候，注释行不能写到行末，不然会引起格式报错。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2020/03/04/log-in-cluster-using-a-interactive-way/" data-id="clo6kh8sh003gycxjenskevog" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/expect/" rel="tag">expect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/" rel="tag">ssh</a></li></ul>
+
+    </footer>
+
   </div>
 
-{% endblock %}
+  
+  
+<nav class="article-nav">
+  
+  <a href="/2021/06/02/Visualized-comparative-genomic-methods/" class="article-nav-link">
+    <strong class="article-nav-caption">Newer</strong>
+    <div class="article-nav-title">
+      
+      Visualized comparative genomic methods
+      
+    </div>
+  </a>
+  
+  
+  <a href="/2020/01/16/linux-command-split-for-transfering-data/" class="article-nav-link">
+    <strong class="article-nav-caption">Older</strong>
+    <div class="article-nav-title">linux command split for transfering data</div>
+  </a>
+  
+</nav>
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+  
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+  
+  
+  
+
+</article>
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>Carpe&#39;s Garden &copy; 2023</li>
+      
+        <li>
+          
+            <a href="https://beian.miit.gov.cn/" target="_blank"></a>
+            
+        </li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+    <p><ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt tooltip" data-tooltip="UV"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark tooltip" data-tooltip="PV"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul></p>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="Carpe&#39;s Garden"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>

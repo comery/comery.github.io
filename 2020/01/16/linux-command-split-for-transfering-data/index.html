@@ -1,37 +1,249 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="学习总结 思考感悟 知识管理">
+  
+  <title>
+    linux command split for transfering data |
+    
+    Carpe&#39;s Garden
+  </title>
+  <!-- Icon -->
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+  
+<link rel="stylesheet" href="/css/style.css">
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
-{% block page_class %}page-post-detail{% endblock %}
+  
+  
+<script src="/js/pace.min.js"></script>
 
+<meta name="generator" content="Hexo 6.3.0"></head>
 
-{% block content %}
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-linux-command-split-for-transfering-data" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h1 class="article-title" itemprop="name">
+    linux command split for transfering data
+  </h1>
+  
+  
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/01/16/linux-command-split-for-transfering-data/" class="article-date">
+  <time datetime="2020-01-16T15:04:06.000Z" itemprop="datePublished">2020-01-16</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/">常用工具</a>
+</div>
+
     </div>
+    
+
+    
+    
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <p>科研合作经常面临的一个问题是，需要及时的共享数据，对于不涉及太大数据的人来说，一个百度云盘或者谷歌drive就搞定了，但是对于做生物信息分析的，很多时候需要分享的是bam，fastq一类的文件，小则几百G，大到上T的数据，想想都头疼。不过这个问题也不难解决，搭建一个ftp就可以实现数据传输，尤其是和其他国家的合作者。</p>
+<p>最近就遇到这个情况，当然这里并不是分享如何搭建FTP了，而是讲讲数据传输时候需要注意的问题。传输的过程中最常遇到的问题应该是网络的不稳定导致的数据传输中断，尤其是单个文件过大，所以对大文件切分是十分有必要的。</p>
+<p>起初我要传一个很大的bam文件，是四个样本merge之后的，大概86G，同事帮我传的时候说请将每个文件拆分成单个文件不超过8G，我想了想，那把每个样品的bam文件拆开吧，但是这样也超过8G了呀，难道需要把单个bam文件转成sam文件再拆分（因为bam文件是二进制的，如果要按行操作，肯定是想着转成sam操作），好复杂啊，有没有什么更好的方式呢？随即我想到了linux的split命令，不过我只用它拆分过文本文件，加<br><code>-l</code>参数可以按照指定的行数拆分，难道也可以按照字节数拆分？输入命令一查，还真是如此：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">SPLIT(1)                  BSD General Commands Manual                 SPLIT(1)</span><br><span class="line"></span><br><span class="line">NAME</span><br><span class="line">     split -- split a file into pieces</span><br><span class="line"></span><br><span class="line">SYNOPSIS</span><br><span class="line">     split [-a suffix_length] [-b byte_count[k|m]] [-l line_count] [-p pattern] [file [name]]</span><br><span class="line"></span><br><span class="line">DESCRIPTION</span><br><span class="line">     The split utility reads the given file and breaks it up into files of 1000 lines each.  If file is a single dash (`-&#x27;) or absent, split</span><br><span class="line">     reads from the standard input.</span><br><span class="line"></span><br><span class="line">     The options are as follows:</span><br><span class="line"></span><br><span class="line">     -a suffix_length</span><br><span class="line">             Use suffix_length letters to form the suffix of the file name.</span><br><span class="line"></span><br><span class="line">     -b byte_count[k|m]</span><br><span class="line">             Create smaller files byte_count bytes in length.  If ``k&#x27;&#x27; is appended to the number, the file is split into byte_count kilobyte</span><br><span class="line">             pieces.  If ``m&#x27;&#x27; is appended to the number, the file is split into byte_count megabyte pieces.</span><br><span class="line"></span><br><span class="line">     -l line_count</span><br><span class="line">             Create smaller files n lines in length.</span><br><span class="line"></span><br><span class="line">     -p pattern</span><br><span class="line">             The file is split whenever an input line matches pattern, which is interpreted as an extended regular expression.  The matching</span><br><span class="line">             line will be the first line of the next output file.  This option is incompatible with the -b and -l options.</span><br><span class="line"></span><br><span class="line">     If additional arguments are specified, the first is used as the name of the input file which is to be split.  If a second additional</span><br><span class="line">     argument is specified, it is used as a prefix for the names of the files into which the file is split.  In this case, each file into</span><br><span class="line">     which the file is split is named by the prefix followed by a lexically ordered suffix using suffix_length characters in the range</span><br><span class="line">     ``a-z&#x27;&#x27;.  If -a is not specified, two letters are used as the suffix.</span><br><span class="line">     If the name argument is not specified, the file is split into lexically ordered files named with the prefix ``x&#x27;&#x27; and with suffixes as</span><br><span class="line">     above.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>划重点，<code>-b</code>参数就可以对二进制文件按照字节来拆分，所以要拆分成大小为8G的文件就应该是： <code>split -b 8G file.bam</code>希望以上内容对大家的日常工作有所帮助。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2020/01/16/linux-command-split-for-transfering-data/" data-id="clo6kh8sh003dycxjd84fdp77" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bam/" rel="tag">bam</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/split/" rel="tag">split</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/transfer/" rel="tag">transfer</a></li></ul>
+
+    </footer>
+
   </div>
 
-{% endblock %}
+  
+  
+<nav class="article-nav">
+  
+  <a href="/2020/03/04/log-in-cluster-using-a-interactive-way/" class="article-nav-link">
+    <strong class="article-nav-caption">Newer</strong>
+    <div class="article-nav-title">
+      
+      log in cluster using a interactive way
+      
+    </div>
+  </a>
+  
+  
+  <a href="/2020/01/12/Look-across/" class="article-nav-link">
+    <strong class="article-nav-caption">Older</strong>
+    <div class="article-nav-title">隔岸相望</div>
+  </a>
+  
+</nav>
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+  
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+  
+  
+  
+
+</article>
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>Carpe&#39;s Garden &copy; 2023</li>
+      
+        <li>
+          
+            <a href="https://beian.miit.gov.cn/" target="_blank"></a>
+            
+        </li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+    <p><ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt tooltip" data-tooltip="UV"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark tooltip" data-tooltip="PV"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul></p>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="Carpe&#39;s Garden"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>

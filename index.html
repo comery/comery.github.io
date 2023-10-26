@@ -1,23 +1,892 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}{{ config.title }}{% if theme.index_with_subtitle and config.subtitle %} - {{config.subtitle }}{% endif %}{% endblock %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="学习总结 思考感悟 知识管理">
+  
+  <title>
+    
+    Carpe&#39;s Garden
+  </title>
+  <!-- Icon -->
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+  
+<link rel="stylesheet" href="/css/style.css">
 
-{% block page_class %}
-  {% if is_home() %}page-home{% endif -%}
-{% endblock %}
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
-{% block content %}
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
+  
+  
+<script src="/js/pace.min.js"></script>
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
+<meta name="generator" content="Hexo 6.3.0"></head>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+<body>
+  <main class="content">
+    <section class="jumbotron">
+  <div class="video">
+    
+    <div class="video-frame">
+      <img src="/images/ocean/overlay-hero.png" alt="Decorative image frame">
+    </div>
+    
+    <div class="video-media">
+      <video playsinline="" autoplay="" loop="" muted="" data-autoplay="" poster="/images/ocean/ocean.png"
+        x5-video-player-type="h5">
+        <source src="/images/ocean/ocean.mp4" type="video/mp4">
+        <source src="/images/ocean/ocean.ogv" type="video/ogg">
+        <source src="/images/ocean/ocean.webm" type="video/webm">
+        <p>Your user agent does not support the HTML5 Video element.</p>
+      </video>
+      <div class="video-overlay"></div>
+    </div>
+    <div class="video-inner text-center text-white">
+      <h1><a href="/">Carpe&#39;s Garden</a></h1>
+      <p></p>
+      <div><img src="/images/hexo-inverted.svg" class="brand" alt="Carpe&#39;s Garden"></div>
+    </div>
+    <div class="video-learn-more">
+      <a class="anchor" href="#landingpage"><i class="fe fe-mouse"></i></a>
+    </div>
+  </div>
+</section>
+<div id="landingpage">
+  <section class="outer">
+  <article class="articles">
+    
+    <h1 class="page-type-title"></h1>
+    
+    
+    <article id="post-hello-world" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2023/10/25/hello-world/">Hello World</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2023/10/25/hello-world/" class="article-date">
+  <time datetime="2023-10-25T11:51:26.491Z" itemprop="datePublished">2023-10-25</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2023/10/25/hello-world/" data-id="clo6kh8sd0031ycxj662v6glm" class="article-share-link">
+        Share
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-non-root-user-install-python3-for-linux" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2022/04/14/non-root-user-install-python3-for-linux/">non-root user install python3 for linux</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2022/04/14/non-root-user-install-python3-for-linux/" class="article-date">
+  <time datetime="2022-04-13T16:29:47.000Z" itemprop="datePublished">2022-04-13</time>
+</a>
+      
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <h3 id="直接用prefix指定自己的安装目录"><a href="#直接用prefix指定自己的安装目录" class="headerlink" title="直接用prefix指定自己的安装目录"></a>直接用prefix指定自己的安装目录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">非root 用户可以直接用以下命令安装</span></span><br><span class="line">wget https://www.python.org/ftp/python/3.10.2/Python-3.10.2.tar.xz</span><br><span class="line">tar -Jxvf Python-3.10.2.tar.xz</span><br><span class="line">cd Python-3.10.2</span><br><span class="line">./configure  --prefix=/home/yourname/python</span><br><span class="line">make </span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+
+
+<p>按照上面的方法安装之后可能有个问题是，用pip安装模块的时候，不能使用ssl，这可能和你没有openssl有关，所以需要在安装python的时候，添加openssl的依赖关系.</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WARNING: pip is configured with locations that require TLS/SSL, however the ssl module in Python is not available.</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">./configure  --prefix=/home/yourname/python --with-openssl=/home/yourname/openssl_env</span><br><span class="line">make </span><br><span class="line">make install</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加环境变量</span></span><br><span class="line">export LIBRARY_PATH=&quot;/home/yourname/openssl_env/lib:$LIBRARY_PATH&quot;</span><br><span class="line">export LD_LIBRARY_PATH=&quot;/home/yourname/openssl_env/lib:$LD_LIBRARY_PATH&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2022/04/14/non-root-user-install-python3-for-linux/" data-id="clo6kh8sg003aycxj551p9hyg" class="article-share-link">
+        Share
+      </a>
+      
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-Visualized-comparative-genomic-methods" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2021/06/02/Visualized-comparative-genomic-methods/">Visualized comparative genomic methods</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2021/06/02/Visualized-comparative-genomic-methods/" class="article-date">
+  <time datetime="2021-06-02T11:18:51.000Z" itemprop="datePublished">2021-06-02</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/">生物信息</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>比较基因组学工具，用来可视化多基因组（跨物种&#x2F;不同个体）比对信息，或者是基因的共线性信息。</p>
+<p>Reading materials</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://link.springer.com/protocol/10.1007/978-1-4939-9074-0_4">Whole-Genome Alignment</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/da5922df19d1">聊聊基因组共线性</a></p>
+</li>
+<li><p>geneCo: a visualized comparative genomic method to analyze multiple genome structures<br>web:  <a target="_blank" rel="noopener" href="https://bigdata.dongguk.edu/geneCo">https://bigdata.dongguk.edu/geneCo</a><br>paper: <a target="_blank" rel="noopener" href="https://academic.oup.com/bioinformatics/article/35/24/5303/5539862">https://academic.oup.com/bioinformatics/article/35/24/5303/5539862</a></p>
+</li>
+<li><p>M-GCAT: interactively and efficiently constructing large-scale multiple genome comparison frameworks in closely related species</p>
+</li>
+</ul>
+<p>download: <a target="_blank" rel="noopener" href="http://alggen.lsi.upc.es/recerca/align/mgcat/intro-mgcat.html">http://alggen.lsi.upc.es/recerca/align/mgcat/intro-mgcat.html</a><br>paper: <a target="_blank" rel="noopener" href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-7-433">https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-7-433</a></p>
+<ul>
+<li><p>FlexiDot: Highly customizable, ambiguity-aware dotplots for visual sequence analyses<br>github: <a target="_blank" rel="noopener" href="https://github.com/molbio-dresden/flexidot">https://github.com/molbio-dresden/flexidot</a><br>paper: <a target="_blank" rel="noopener" href="https://academic.oup.com/bioinformatics/article/34/20/3575/4995848">https://academic.oup.com/bioinformatics/article/34/20/3575/4995848</a></p>
+</li>
+<li><p>GenPlay Multi-Genome, a tool to compare and analyze multiple human genomes in a graphical interface<br>github: <a target="_blank" rel="noopener" href="https://github.com/JulienLajugie/GenPlay">https://github.com/JulienLajugie/GenPlay</a><br>paper: <a target="_blank" rel="noopener" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4402384/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4402384/</a></p>
+</li>
+<li><p>Ensembl, Compare genes across species<br><a target="_blank" rel="noopener" href="https://asia.ensembl.org/info/website/tutorials/compara.html">https://asia.ensembl.org/info/website/tutorials/compara.html</a></p>
+</li>
+<li><p>Combining Strengths for Multi-genome Visual Analytics Comparison<br>github: <a target="_blank" rel="noopener" href="https://github.com/Bitlab-UMA">https://github.com/Bitlab-UMA</a><br>paper: <a target="_blank" rel="noopener" href="https://journals.sagepub.com/doi/10.1177/1177932218825127">https://journals.sagepub.com/doi/10.1177/1177932218825127</a></p>
+</li>
+<li><p>gggenes,<br>github: <a target="_blank" rel="noopener" href="https://github.com/wilkox/gggenes">https://github.com/wilkox/gggenes</a><br>examples: <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1534338">https://cloud.tencent.com/developer/article/1534338</a></p>
+</li>
+<li><p>Mummer4,<br>mummerplot</p>
+</li>
+<li><p>Genomicus<br>Genomicus  is a genome browser that enables users to navigate in genomes in several dimensions: linearly along chromosome axes, transversaly across different species, and chronologicaly along evolutionary time.<br>web: <a target="_blank" rel="noopener" href="https://www.genomicus.biologie.ens.fr/genomicus-metazoa-30.01/cgi-bin/search.pl">https://www.genomicus.biologie.ens.fr/genomicus-metazoa-30.01/cgi-bin/search.pl</a></p>
+</li>
+<li><p>Circos</p>
+</li>
+<li><p>R package: RIdeogram</p>
+</li>
+<li><p>TBtools<br>examples: <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/45bece9a0518">https://www.jianshu.com/p/45bece9a0518</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2334a6346941">https://www.jianshu.com/p/2334a6346941</a></p>
+</li>
+<li><p>mauve<br>适合小基因组的比对分析， 例如线粒体，叶绿体，质粒的基因组，还有细菌，病毒的基因组。<br>web: <a target="_blank" rel="noopener" href="http://darlinglab.org/mauve/mauve.html">http://darlinglab.org/mauve/mauve.html</a><br>example: <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/359203720">https://zhuanlan.zhihu.com/p/359203720</a></p>
+</li>
+<li><p>Smash++: an alignment-free and memory-efficient tool to find genomic rearrangements<br>github: <a target="_blank" rel="noopener" href="https://github.com/smortezah/smashpp">https://github.com/smortezah/smashpp</a><br>paper: <a target="_blank" rel="noopener" href="https://academic.oup.com/gigascience/article/9/5/giaa048/5841055">https://academic.oup.com/gigascience/article/9/5/giaa048/5841055</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2021/06/02/Visualized-comparative-genomic-methods/" data-id="clo6kh8s8002aycxj4z3yb6lo" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bio-software/" rel="tag">bio-software</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/learning/" rel="tag">learning</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-log-in-cluster-using-a-interactive-way" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2020/03/04/log-in-cluster-using-a-interactive-way/">log in cluster using a interactive way</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/03/04/log-in-cluster-using-a-interactive-way/" class="article-date">
+  <time datetime="2020-03-03T23:19:33.000Z" itemprop="datePublished">2020-03-03</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/">常用工具</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>也不知道公司的集群为什么就开始使用双向验证的，自从有了这东西，每天到公司除了打开电脑，输入ssh的快捷键，输入密码之后，就得掏出手机看看验证码，有时候要是眼花还得多输几遍，真是欲哭无泪，太tm浪费时间了， 上传下载文件更是如此，长此以往，记数字的能力都给提高了，记忆力都被迫营业了。</p>
+<p>不过活人总不能被尿给憋死，上周师弟分享了一个expect语言交互式登录的方法，今天有空来试一下，试完感觉是： 真香！</p>
+<p>他的博客原文在这：&#x3D;&gt; <a target="_blank" rel="noopener" href="https://nonewood.github.io/2019/10/25/Mac-Authenticator-md/">link</a></p>
+<h4 id="一键登录"><a href="#一键登录" class="headerlink" title="一键登录"></a>一键登录</h4><p>总结一下，主要是两个方面：</p>
+<ul>
+<li>实现用电脑端就能收到验证码，另外需要在系统层面捕获到验证码序列，这个前人已经做了，我们只需要”拿来主义“， 这里主要是讲Mac上的方式，Win在文章中也有提到相应的软件，这里不再赘述。首先下载GoldenPassport.zip 然后解压，移动到Applications里面，因为不是官方软件所以需要你去system里面授权使用；开始运行之后在状态栏就有一个小图标，点击添加，将你的个人身份链接加进去，或者从二维码识别添加。然后就搞定了。</li>
+</ul>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/jasondan/p/6508249.html">https://www.cnblogs.com/jasondan/p/6508249.html</a><br><a target="_blank" rel="noopener" href="https://github.com/stanzhai/GoldenPassport">https://github.com/stanzhai/GoldenPassport</a></p>
+</blockquote>
+<ul>
+<li>现在电脑已经可以接受验证码了，上面的软件是通过HTTP的方式给其他程序调用。那我们怎么接收验证码并实现自动登录呢？可以使用expect语言编写脚本获取验证码，实现交互式登录，具体脚本如下：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/usr/bin/expect -f</span></span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">xxxx is your account</span></span><br><span class="line">  set user xxxx </span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">your IP address</span></span><br><span class="line">  set host IP </span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">xxxx is your passsword</span></span><br><span class="line">  set password xxxx </span><br><span class="line"><span class="meta prompt_">  # </span><span class="language-bash">get the verfication code from the <span class="built_in">local</span> host; 在 expect 脚本里边使用 shell 命令； grep 捕获变量；</span></span><br><span class="line">  set code [exec sh -c &#123;curl -s &quot;http://localhost:17304&quot; |grep -Eo &quot;\d&#123;6&#125;&quot;&#125;] </span><br><span class="line">  set timeout -1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">防止窗口串行</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">trap</span> sigwinch spawned</span></span><br><span class="line"> trap &#123;</span><br><span class="line">  set rows [stty rows]</span><br><span class="line">  set cols [stty columns]</span><br><span class="line">  stty rows $rows columns $cols &lt; $spawn_out(slave,name)</span><br><span class="line"> &#125; WINCH</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">...</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  spawn ssh $user@$host</span><br><span class="line">  expect &quot;*assword:*&quot;</span><br><span class="line">  send &quot;$password\r&quot;</span><br><span class="line">  expect &quot;*erification code:*&quot;</span><br><span class="line">  send &quot;$code\r&quot;</span><br><span class="line">  interact</span><br></pre></td></tr></table></figure>
+
+<p>将上述脚本保存到文件，修改必要的参数为自己的信息，并<code>chmod +x script</code>添加执行权限，另外你需要检查一下电脑有没有expect语言，没有到话用<code>brew install expect</code>安装一下；然后就可以一键登录了。</p>
+<h4 id="上下传文件"><a href="#上下传文件" class="headerlink" title="上下传文件"></a>上下传文件</h4><p>和上面的登录类似的，可以实现文件的自由下载；</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/usr/bin/expect -f</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">the file need scp</span> </span><br><span class="line"> set src_file [lindex $argv 0] </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">the target directory</span> </span><br><span class="line"> set dest_dir [lindex $argv 1] </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">xxxx is your account</span></span><br><span class="line"> set user xxxx </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">your IP address</span></span><br><span class="line"> set host IP  </span><br><span class="line"><span class="meta prompt_"> # </span><span class="language-bash">xxxx is your passsword</span></span><br><span class="line"> set password xxxx </span><br><span class="line"> set code [exec sh -c &#123;curl -s &quot;http://localhost:17304&quot; |grep -Eo &quot;\d&#123;6&#125;&quot;&#125;]</span><br><span class="line"> set timeout -1</span><br><span class="line"></span><br><span class="line"> spawn scp -r $user@$host:$src_file $dest_dir</span><br><span class="line"> expect &quot;*assword:&quot;</span><br><span class="line"> send &quot;$password\r&quot;</span><br><span class="line"> expect &quot;*erification code:*&quot;</span><br><span class="line"> send &quot;$code\r&quot;</span><br><span class="line"> expect &quot;100%&quot;</span><br></pre></td></tr></table></figure>
+<p> 这里面有个小坑就是，上面的两个脚本在写的时候，注释行不能写到行末，不然会引起格式报错。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2020/03/04/log-in-cluster-using-a-interactive-way/" data-id="clo6kh8sh003gycxjenskevog" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/expect/" rel="tag">expect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/" rel="tag">ssh</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-linux-command-split-for-transfering-data" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2020/01/16/linux-command-split-for-transfering-data/">linux command split for transfering data</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/01/16/linux-command-split-for-transfering-data/" class="article-date">
+  <time datetime="2020-01-16T15:04:06.000Z" itemprop="datePublished">2020-01-16</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7/">常用工具</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>科研合作经常面临的一个问题是，需要及时的共享数据，对于不涉及太大数据的人来说，一个百度云盘或者谷歌drive就搞定了，但是对于做生物信息分析的，很多时候需要分享的是bam，fastq一类的文件，小则几百G，大到上T的数据，想想都头疼。不过这个问题也不难解决，搭建一个ftp就可以实现数据传输，尤其是和其他国家的合作者。</p>
+<p>最近就遇到这个情况，当然这里并不是分享如何搭建FTP了，而是讲讲数据传输时候需要注意的问题。传输的过程中最常遇到的问题应该是网络的不稳定导致的数据传输中断，尤其是单个文件过大，所以对大文件切分是十分有必要的。</p>
+<p>起初我要传一个很大的bam文件，是四个样本merge之后的，大概86G，同事帮我传的时候说请将每个文件拆分成单个文件不超过8G，我想了想，那把每个样品的bam文件拆开吧，但是这样也超过8G了呀，难道需要把单个bam文件转成sam文件再拆分（因为bam文件是二进制的，如果要按行操作，肯定是想着转成sam操作），好复杂啊，有没有什么更好的方式呢？随即我想到了linux的split命令，不过我只用它拆分过文本文件，加<br><code>-l</code>参数可以按照指定的行数拆分，难道也可以按照字节数拆分？输入命令一查，还真是如此：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">SPLIT(1)                  BSD General Commands Manual                 SPLIT(1)</span><br><span class="line"></span><br><span class="line">NAME</span><br><span class="line">     split -- split a file into pieces</span><br><span class="line"></span><br><span class="line">SYNOPSIS</span><br><span class="line">     split [-a suffix_length] [-b byte_count[k|m]] [-l line_count] [-p pattern] [file [name]]</span><br><span class="line"></span><br><span class="line">DESCRIPTION</span><br><span class="line">     The split utility reads the given file and breaks it up into files of 1000 lines each.  If file is a single dash (`-&#x27;) or absent, split</span><br><span class="line">     reads from the standard input.</span><br><span class="line"></span><br><span class="line">     The options are as follows:</span><br><span class="line"></span><br><span class="line">     -a suffix_length</span><br><span class="line">             Use suffix_length letters to form the suffix of the file name.</span><br><span class="line"></span><br><span class="line">     -b byte_count[k|m]</span><br><span class="line">             Create smaller files byte_count bytes in length.  If ``k&#x27;&#x27; is appended to the number, the file is split into byte_count kilobyte</span><br><span class="line">             pieces.  If ``m&#x27;&#x27; is appended to the number, the file is split into byte_count megabyte pieces.</span><br><span class="line"></span><br><span class="line">     -l line_count</span><br><span class="line">             Create smaller files n lines in length.</span><br><span class="line"></span><br><span class="line">     -p pattern</span><br><span class="line">             The file is split whenever an input line matches pattern, which is interpreted as an extended regular expression.  The matching</span><br><span class="line">             line will be the first line of the next output file.  This option is incompatible with the -b and -l options.</span><br><span class="line"></span><br><span class="line">     If additional arguments are specified, the first is used as the name of the input file which is to be split.  If a second additional</span><br><span class="line">     argument is specified, it is used as a prefix for the names of the files into which the file is split.  In this case, each file into</span><br><span class="line">     which the file is split is named by the prefix followed by a lexically ordered suffix using suffix_length characters in the range</span><br><span class="line">     ``a-z&#x27;&#x27;.  If -a is not specified, two letters are used as the suffix.</span><br><span class="line">     If the name argument is not specified, the file is split into lexically ordered files named with the prefix ``x&#x27;&#x27; and with suffixes as</span><br><span class="line">     above.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>划重点，<code>-b</code>参数就可以对二进制文件按照字节来拆分，所以要拆分成大小为8G的文件就应该是： <code>split -b 8G file.bam</code>希望以上内容对大家的日常工作有所帮助。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2020/01/16/linux-command-split-for-transfering-data/" data-id="clo6kh8sh003dycxjd84fdp77" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bam/" rel="tag">bam</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/split/" rel="tag">split</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/transfer/" rel="tag">transfer</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-Look-across" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2020/01/12/Look-across/">隔岸相望</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/01/12/Look-across/" class="article-date">
+  <time datetime="2020-01-11T23:08:46.000Z" itemprop="datePublished">2020-01-11</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/">诗文杂趣</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>期待我们是相隔一岸的<br>即使只是楼宇之间<br>我发出了一只<br>可以收回的箭<br>希望你无意间的一瞥<br>可以辨认出它曲折的忧伤<br>当所有洪水再也压抑不住<br>请让我漂浮在这洪流中<br>浪花踏下每一次昂首遥望</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2020/01/12/Look-across/" data-id="clo6kh8rv0010ycxj3gngdrmy" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/poem/" rel="tag">poem</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-Estimation-of-species-divergence-times-usingusing-protein-sequences-by-mcmctree" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2019/07/09/Estimation-of-species-divergence-times-usingusing-protein-sequences-by-mcmctree/">Estimation of species divergence times usingusing protein sequences by mcmctree</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2019/07/09/Estimation-of-species-divergence-times-usingusing-protein-sequences-by-mcmctree/" class="article-date">
+  <time datetime="2019-07-09T10:10:23.000Z" itemprop="datePublished">2019-07-09</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/">生物信息</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <h3 id="1-prepare-a-phylogenetic-tree-with-fossil-evidence-time"><a href="#1-prepare-a-phylogenetic-tree-with-fossil-evidence-time" class="headerlink" title="1. prepare a phylogenetic tree with fossil evidence time"></a>1. prepare a phylogenetic tree with fossil evidence time</h3><p>The first line contains: species number(Tab)fossil record number</p>
+<blockquote>
+<p>example:<br>18   1<br>((((((((((((PET,(((PEFU,PN),PEFC),PEEL)),PEE),PT),PO),PF),PC15),(LB,CC)),SC)’&gt;0.90&lt;1.2833’,(CP,SL)’&gt;0.9898&lt;1.3899’),FM),AS),SN);</p>
+</blockquote>
+<ul>
+<li>control file</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">seed = -1</span><br><span class="line">seqfile = 71genes.gblocks.protein.linked.fa</span><br><span class="line">treefile = three.fossil.tree</span><br><span class="line">mcmcfile = mcmc.txt</span><br><span class="line">outfile = out.txt</span><br><span class="line">ndata = 1</span><br><span class="line">seqtype = 2 * 0: nucleotides; 1:codons; 2:AAs</span><br><span class="line">usedata = 3 * 0: no data; 1:seq like; 2:normal approximation; 3:out.BV (in.BV)</span><br><span class="line">clock = 2 * 1: global clock; 2: independent rates; 3: correlated rates</span><br><span class="line">RootAge = &#x27;&lt;7.0&#x27;  * safe constraint on root age, used if no fossil for root.</span><br><span class="line">model = 0 * 0:JC69, 1:K80, 2:F81, 3:F84, 4:HKY85</span><br><span class="line">alpha = 0 * alpha for gamma rates at sites</span><br><span class="line">ncatG = 5 * No. categories in discrete gamma</span><br><span class="line">cleandata = 0 * remove sites with ambiguity data (1:yes, 0:no)?</span><br><span class="line">BDparas = 1 1 0.1 * birth, death, sampling</span><br><span class="line">kappa_gamma = 6 2 * gamma prior for kappa</span><br><span class="line">alpha_gamma = 1 1 * gamma prior for alpha</span><br><span class="line">rgene_gamma = 2 201 * gamma prior for rate for genes</span><br><span class="line">sigma2_gamma = 1 10 1 * gamma prior for sigma^2     (for clock=2 or 3)</span><br><span class="line">finetune = 1: .1 .1 .1 .1 .1 .1 * auto (0 or 1): times, rates, mixing, paras, RateParas, FossilErr</span><br><span class="line">print = 1 * 0: no mcmc sample; 1: everything except branch rates 2: everything</span><br><span class="line">burnin = 2000</span><br><span class="line">sampfreq = 10</span><br><span class="line">nsample = 20000</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-run-mcmctree"><a href="#2-run-mcmctree" class="headerlink" title="2. run mcmctree"></a>2. run mcmctree</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mcmctree mcmctree.ctl</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-modify-settings-in-tmp1-ctl"><a href="#3-modify-settings-in-tmp1-ctl" class="headerlink" title="3. modify settings in tmp1.ctl"></a>3. modify settings in tmp1.ctl</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">seqfile = tmp1.txt</span><br><span class="line">treefile = tmp1.trees</span><br><span class="line">outfile = tmp1.out</span><br><span class="line">noisy = 3</span><br><span class="line">seqtype = 2</span><br><span class="line">model = 0</span><br><span class="line">aaRatefile = wag.dat *from /data folder in paml&#x27;s path</span><br><span class="line">fix_alpha = 0</span><br><span class="line">alpha = 0.5</span><br><span class="line">ncatG = 4</span><br><span class="line">Small_Diff = 0.1e-6</span><br><span class="line">getSE = 2</span><br><span class="line">method = 1</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-run-codeml"><a href="#4-run-codeml" class="headerlink" title="4. run codeml"></a>4. run codeml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codeml tmp1.ctl</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-rename-rst2-into-in-BV"><a href="#5-rename-rst2-into-in-BV" class="headerlink" title="5. rename rst2 into in.BV"></a>5. rename rst2 into in.BV</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> rst2 in.BV</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-modify-the-item-of-‘usdata’-in-mcmctree-ctl-file"><a href="#6-modify-the-item-of-‘usdata’-in-mcmctree-ctl-file" class="headerlink" title="6. modify the item of ‘usdata’ in mcmctree.ctl file"></a>6. modify the item of ‘usdata’ in mcmctree.ctl file</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usedata = 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-final-run-of-mcmctree"><a href="#7-final-run-of-mcmctree" class="headerlink" title="7. final run of mcmctree"></a>7. final run of mcmctree</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mcmctree mcmctree.ctl</span><br></pre></td></tr></table></figure>
+<p>finally, you will get the tree you want!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2019/07/09/Estimation-of-species-divergence-times-usingusing-protein-sequences-by-mcmctree/" data-id="clo6kh8rl0006ycxj4qfvf2os" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bio-software/" rel="tag">bio-software</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/codeml/" rel="tag">codeml</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mcmctree/" rel="tag">mcmctree</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/phylogenetic-tree/" rel="tag">phylogenetic tree</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-Hackathon" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2019/05/26/Hackathon/">Hackathon</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2019/05/26/Hackathon/" class="article-date">
+  <time datetime="2019-05-25T23:44:39.000Z" itemprop="datePublished">2019-05-25</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/">生物信息</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <h3 id="Hackathon-it-sounds-cool"><a href="#Hackathon-it-sounds-cool" class="headerlink" title="Hackathon, it sounds cool!"></a>Hackathon, it sounds cool!</h3><p>就在这周一，我和另外三个小组成员完成了我们第一次Hackathon活动体验，说实话，在最初听到这个词的时候，觉得非常棒，这种团队成员通力合作，在短时间内完成一项挑战真的是一件让人兴奋的事情。专门查了一下这个词的由来，原来这是广大码农的一个传统啊，竟然之前没有发现。</p>
+<blockquote>
+<p>编程马拉松（英语：hackathon，又译为黑客松），又称黑客日（hack day）、黑客节（hackfest）或编程节（codefest），是一个流传于黑客（hacker）当中的新词汇。编程马拉松是一种活动。在该活动当中，计算机程序员以及其他与软件发展相关的人员，如图形设计师、界面设计师与项目经理，相聚在一起，以紧密合作的形式去进行某项软件项目。编程马拉松的灵魂是合作地编写程序和应用。编程马拉松的时长一般在几天到一周不等。编程马拉松不是编写些一次性作品那么简单。编程马拉松的精髓在于：很多人，在一段特定的时间内，相聚在一起，以他们想要的方式，去做他们想做的事情——整个编程的过程几乎没有任何限制或者方向。</p>
+</blockquote>
+<blockquote>
+<p>还有一个术语叫做“短跑（sprint）”。“短跑”用于描述一种性质与编程马拉松类似的活动。“短跑”的特点是：它只持续几天时间。另一个描述此类活动的词汇是“代码节”。这个词汇主要流传于Linux用户当中。“代码节”这个词是一个合成词，它由代码和节日两部分组合而成。“代码节”这个词是从“安装节”一词引申而来的。“安装节”是一种 Linux用户群的活动。 from <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%BB%91%E5%AE%A2%E6%9D%BE">维基百科</a></p>
+</blockquote>
+<h3 id="讲讲这次的体验"><a href="#讲讲这次的体验" class="headerlink" title="讲讲这次的体验"></a>讲讲这次的体验</h3><p>在征集题目的时候，我们小组就贡献了两个task，其中一个是我一直想做的，而且是基于我自己之前工作的，我觉得难度应该不是很大，应该很好完成。作为队长，开始我就组织大家提前准备一些资料，然鹅由于各种原因（主要是我太懒。。。&#x3D; _ &#x3D;;;）没有组织大家进行讨论，就连我手头的相关资料都是前一天晚上12点才给大家发邮件的。所以当时并没有报任何能得奖的念头，纯粹是体验一下（以及惦记着免费食宿，还能体验一下公司楼上公寓的景色）。<br>附上我当时发的邮件：</p>
+<blockquote>
+<p>实在抱歉，前面没能组织大家先讨论下。明天大家就当一次小活动吧，我们尽力而为，我预想的情况就是我们能将现有的注释intron的工具加进MitoZ的流程就可以了，当然可能会遇到很多问题，比如现有软件的注释是否正确的问题，coding的问题，后面可视化的问题，最终验证的问题，这些都是我们明天需要解决的问题。我们明天开始前先讨论下技术路线和大家的分工。<br>最后，预祝我们能够顺利完成，奖金什么的都不重要，玩的开心最重要，希望大家有所收获。</p>
+</blockquote>
+<p>等到当天比赛开始的时候，跟几位小伙伴稍微一讨论，才发现我自己对相关方面并不了解啊，就连相关类群的信息都模模糊糊，顿时觉得自己没把握住重点，内心羞愧难当啊。还好两位比较senior的同事都很给力，在中午吃饭时间我们算是定下了一个思路。后面经过奋战到凌晨3点，算是完成了一个基础版本，虽然比较粗糙，但还是解决了实际问题，可能也是因为这个原因，最后我们竟然也拿到了奖。</p>
+<p>我觉得这次活动最大的收获就是让我重新体验到了那种解决问题的激情，这可能是我最近几年感觉最精力集中的一天，这种感觉非常美妙，当最后的代码运行成功的时候，非常具有成就感。另外，也是我在PPT里面提到的一点，完成往往要比完美更重要，大多时候的拖延都来自于完美主义，想着要花更多的时间将各种因素考虑到，然后想出一个万全之策，但这种做法会作茧自缚，迈出第一步变得十分艰难。只有迈出了第一步，整个过程才能变得流畅起来，即使最后的结果是需要将面前的推倒重来，那也是在原先的基础之上，总好过凭空创造。</p>
+<p>码了这么多字，主要是为了自勉，保持这种激情以及摒弃“完美主义”。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2019/05/26/Hackathon/" data-id="clo6kh8rs000rycxj1ujkevm6" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bio-software/" rel="tag">bio-software</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/coding/" rel="tag">coding</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mitoz/" rel="tag">mitoz</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-I-buy-a-domain-name-for-my-blog" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2019/01/29/I-buy-a-domain-name-for-my-blog/">I buy a domain name for my blog</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2019/01/29/I-buy-a-domain-name-for-my-blog/" class="article-date">
+  <time datetime="2019-01-28T19:36:41.000Z" itemprop="datePublished">2019-01-28</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>You may find that my blog is redirected to a new domain name “comery.cn”, this is the first step to make my own website!</p>
+<p>really looking forward it!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2019/01/29/I-buy-a-domain-name-for-my-blog/" data-id="clo6kh8rr000nycxj1yasanon" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/blog/" rel="tag">blog</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-set-a-flag-for-2019" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2019/01/28/set-a-flag-for-2019/">Set a flag for 2019</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2019/01/28/set-a-flag-for-2019/" class="article-date">
+  <time datetime="2019-01-28T11:48:32.000Z" itemprop="datePublished">2019-01-28</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/">杂七杂八</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>2019年的目标：</p>
+<ul>
+<li>语言考试，申请学校</li>
+<li>3篇文章发表（SE400, moth, fungi）</li>
+<li>系统学习进化方面的理论，以著名的学者以及他们的理论作为线索，整理出系列文章</li>
+<li>自己开发一个扩增子聚类软件和一个简单的组装软件</li>
+<li>入门机器学习和熟练掌握Python的可视化工具</li>
+<li>自己开发网站（comery.cn）</li>
+<li>坚持每周至少有一篇的博客产出</li>
+<li>完整的学习英语写作的经典书籍《<br>Writing Science: How to Write Papers That Get Cited and Proposals That Get Funded》</li>
+<li>如果6月份的会议摘要被选上，完成一次国际会议的英文报告。</li>
+<li>好像现在不怎么想跑步了%&gt;_&lt;%，还是继续坚持篮球和排球吧。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2019/01/28/set-a-flag-for-2019/" data-id="clo6kh8sj003mycxjbagqfuta" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flag/" rel="tag">flag</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next</a>
+  </nav>
+  
+</section>
+</div>
+    <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>Carpe&#39;s Garden &copy; 2023</li>
+      
+        <li>
+          
+            <a href="https://beian.miit.gov.cn/" target="_blank"></a>
+            
+        </li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+    <p><ul class="list-inline">
+  
+  <li><i class="fe fe-bar-chart tooltip" data-tooltip="PV"></i> <span id="busuanzi_value_site_pv"></span></li>
+  
+  <li><i class="fe fe-smile-alt tooltip" data-tooltip="UV"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+</ul></p>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="Carpe&#39;s Garden"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>

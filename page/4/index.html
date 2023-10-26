@@ -1,23 +1,959 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}{{ config.title }}{% if theme.index_with_subtitle and config.subtitle %} - {{config.subtitle }}{% endif %}{% endblock %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="学习总结 思考感悟 知识管理">
+  
+  <title>
+    
+    Carpe&#39;s Garden
+  </title>
+  <!-- Icon -->
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+  
+<link rel="stylesheet" href="/css/style.css">
 
-{% block page_class %}
-  {% if is_home() %}page-home{% endif -%}
-{% endblock %}
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
-{% block content %}
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
+  
+  
+<script src="/js/pace.min.js"></script>
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
+<meta name="generator" content="Hexo 6.3.0"></head>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+<body>
+  <main class="content">
+    <section class="jumbotron">
+  <div class="video">
+    
+    <div class="video-frame">
+      <img src="/images/ocean/overlay-hero.png" alt="Decorative image frame">
+    </div>
+    
+    <div class="video-media">
+      <video playsinline="" autoplay="" loop="" muted="" data-autoplay="" poster="/images/ocean/ocean.png"
+        x5-video-player-type="h5">
+        <source src="/images/ocean/ocean.mp4" type="video/mp4">
+        <source src="/images/ocean/ocean.ogv" type="video/ogg">
+        <source src="/images/ocean/ocean.webm" type="video/webm">
+        <p>Your user agent does not support the HTML5 Video element.</p>
+      </video>
+      <div class="video-overlay"></div>
+    </div>
+    <div class="video-inner text-center text-white">
+      <h1><a href="/">Carpe&#39;s Garden</a></h1>
+      <p></p>
+      <div><img src="/images/hexo-inverted.svg" class="brand" alt="Carpe&#39;s Garden"></div>
+    </div>
+    <div class="video-learn-more">
+      <a class="anchor" href="#landingpage"><i class="fe fe-mouse"></i></a>
+    </div>
+  </div>
+</section>
+<div id="landingpage">
+  <section class="outer">
+  <article class="articles">
+    
+    <h1 class="page-type-title"></h1>
+    
+    
+    <article id="post-Getopt-Long-error" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2017/07/14/Getopt-Long-error/">使用Getopt::Long变量赋值为0时的尴尬</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2017/07/14/Getopt-Long-error/" class="article-date">
+  <time datetime="2017-07-13T23:26:06.000Z" itemprop="datePublished">2017-07-13</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E5%9D%91%E5%9D%91%E4%B8%8D%E6%81%AF/">坑坑不息</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>perl 使用 Getopt::Long 模块的时候，你想给两个参数设置默认值，比如：<br>a,b参数, <code>$a ||= 2， $b ||= 1</code> 一眼看上去好像没什么问题。<br>如果你不赋值给这两个参数，那么$a的值为2，$b为1.</p>
+<p>但如果你想将a,b的值设置为0的时候，问题就来了：<br><code>$a ||= 2， $b ||= 1</code> 这样写实际的传递过程是：先判断“||”左边的值的真假，虽然你是已经给a,b赋值了，但是0会被判定为假，所以a, b的值仍然是2和1，你是不会得到你想要的结果的，这是个不大不小的坑。。。</p>
+<p>修改方式：</p>
+<pre><code>$a = 2 if (!defined $a)
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2017/07/14/Getopt-Long-error/" data-id="clo6kh8rq000lycxj4wwreuy6" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Getopt-Long/" rel="tag">Getopt::Long</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/perl/" rel="tag">perl</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-insomnia-in-summer" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2017/05/13/insomnia-in-summer/">insomnia in summer </a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2017/05/13/insomnia-in-summer/" class="article-date">
+  <time datetime="2017-05-12T23:13:30.000Z" itemprop="datePublished">2017-05-12</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/">诗文杂趣</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <h4 id="夏日无眠"><a href="#夏日无眠" class="headerlink" title="夏日无眠"></a>夏日无眠</h4><center>蛙鸣汤沸不知倦，花开荼蘼夏日喧。
+只说无愁复入眠，辗转难寐数星峦。</center>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2017/05/13/insomnia-in-summer/" data-id="clo6kh8se0034ycxj4f0h3pop" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/poem/" rel="tag">poem</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-Poem-Part1" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2017/04/22/Poem-Part1/">Poem-Part1</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2017/04/22/Poem-Part1/" class="article-date">
+  <time datetime="2017-04-22T10:11:29.000Z" itemprop="datePublished">2017-04-22</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/">诗文杂趣</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <h3 id="你是人间的四月天（改写于Mar-13-2011）"><a href="#你是人间的四月天（改写于Mar-13-2011）" class="headerlink" title="你是人间的四月天（改写于Mar 13, 2011）"></a>你是人间的四月天（改写于Mar 13, 2011）</h3><p>原文：</p>
+<blockquote>
+<center>我说 你是人间的四月天；
+笑响点亮了四面风；
+轻灵在春的光艳中交舞着变。
+你是四月早天里的云烟，
+黄昏吹着风的软，
+星子在无意中闪，
+细雨点洒在花前。
+那轻，那娉婷，你是，
+鲜妍百花的冠冕你戴着，
+你是天真，庄严，
+你是夜夜的月圆。
+雪化后那片鹅黄，你像；
+新鲜初放芽的绿，你是；
+柔嫩喜悦，
+水光浮动着你梦期待中白莲。
+你是一树一树的花开，
+是燕在梁间呢喃，
+——你是爱，是暖，是希望，
+你是人间的四月天！</center>
+</blockquote>
+<p>改写：</p>
+<center>
+你是人间的四月天/
+光艳透着阳光的暖/
+眉波染了泉水的甜/
+你是清晨竹林的香烟/
+空明流动着影的暗/
+鸟雀在无意的听/
+雨露点点洒在花前/
+那轻，那聘婷，你是
+千湖的眼睛你藏着/
+你是天真庄严/
+你是夜夜的月圆/
+月塘中那斑斑点点,你像/
+水中欢快的游鱼，你是/
+顽童天仙/
+光浮着你梦中期待的田野/
+你是一树一树的花香/
+是燕/在梁间呢喃/
+是爱是暖是希望/
+你是人间的四月天！</center>
+
+<h3 id="20110624《无题》"><a href="#20110624《无题》" class="headerlink" title="20110624《无题》"></a>20110624《无题》</h3><center>残阳流朱水，暮霭接葳蕤。
+
+<p>策鞭向代马，雄歌慨而慷。</center></p>
+<h3 id="毕业-11-May-2015"><a href="#毕业-11-May-2015" class="headerlink" title="毕业 11 May 2015"></a>毕业 11 May 2015</h3><center>离心的小岛上有一片晴空
+
+<p>梦想将蓝天与你我拉得</p>
+<p>很近很近</p>
+<p>所有的风都向我们吹</p>
+<p>所有的日子都为我们歌唱</p>
+<p>轻轻地在你的耳边唤起</p>
+<p>六月的雨将如期而至</p>
+<p>匆匆的从你的指尖滑落</p>
+<p>九月的红叶将温婉凝重</p>
+<p>那时候</p>
+<p>风带给你我的讯息</p>
+<p>在那里新的岛上</p>
+<p>仍有一片温暖的晴空</center></p>
+<h3 id="寒夜-11-May-2015"><a href="#寒夜-11-May-2015" class="headerlink" title="寒夜 11 May 2015"></a>寒夜 11 May 2015</h3><center>霜重柏头风压轻,房中水寒辗转冰。
+欲寄书怀兼尺素,便作青鸟云外传。</center>
+
+<h3 id="红桦的秘密-18-May-2015"><a href="#红桦的秘密-18-May-2015" class="headerlink" title="红桦的秘密 18 May 2015"></a>红桦的秘密 18 May 2015</h3><center>一双颤抖的手
+挖出那不堪的历史
+惊奇的发现
+文字依旧新鲜
+是什么能让纸张
+违背时间的意念
+灼伤我眼睛
+刺痛我的心房
+啊！伟大的预言家
+昨日的信未寄
+原来是在等明日
+二十岁的箴言</center>
+
+<h3 id="失眠是我的孪生兄弟"><a href="#失眠是我的孪生兄弟" class="headerlink" title="失眠是我的孪生兄弟"></a>失眠是我的孪生兄弟</h3><center>失眠是我的孪生兄弟
+平时
+静悄悄
+只有
+思念我的时候
+才来
+看我</center>
+
+<h3 id="思念的爬虫-17-September-2015"><a href="#思念的爬虫-17-September-2015" class="headerlink" title="思念的爬虫 17 September 2015"></a>思念的爬虫 17 September 2015</h3><center>1
+空空的脑袋和雨后的泥土一样
+思念像只蚯蚓
+爬向深邃的黑夜
+直到天晴
+
+<p>2<br>我在我的脑袋中爬行<br>黑暗而孤独<br>直到天晴<br>一只雨后的蚯蚓</center></p>
+<h3 id="红色墓碑记-Oct-2015"><a href="#红色墓碑记-Oct-2015" class="headerlink" title="红色墓碑记 Oct. 2015"></a>红色墓碑记 Oct. 2015</h3><center>于化日下，于黑暗里
+从不缺乏你骄傲的红色勋章
+静止是一切恩怨的开端
+或单枪匹马，或三三两两
+在黑暗和疲倦的掩护下
+奔赴沙场
+大千世界，你只钟情于红色的新鲜的蔬菜
+暗流涌动，你只作一瓢饮
+是什么让你坚定而无畏
+让你的敌人望而生畏
+是什么让你练就如此敏捷而优雅的身手
+无形无影
+我好心提示你
+贪婪是所有行为的坟墓
+而当你终于无视我而走开
+啊，朋友啊！
+在你身后印下的勋章
+不是血液
+而是我崩溃的内心</center>
+
+<h3 id="To-Lisa-June-2015"><a href="#To-Lisa-June-2015" class="headerlink" title="To Lisa June 2015"></a>To Lisa June 2015</h3><center>嘱彼佳人，与我在此
+何幸于我，吾说吾视
+他人之心，岂如薄冰
+何谈我生，不视不见
+何幸于我，心之视之
+他人之心，岂如痍疮
+何幸于我，思之视之
+他人之心，何易于我
+何幸于我，佳人于我
+不视不见，何不于殆</center>
+
+<h3 id="诉说-2016"><a href="#诉说-2016" class="headerlink" title="诉说 2016?"></a>诉说 2016?</h3><center>在无底的棉絮里穿行
+只等待坠入天堂的那一刻
+大地流淌着乳白的河
+河流在鲜血中起舞
+
+<p>那开在天空的<br>朵朵都是你前世遗留的帽子<br>唯一不变的是<br>高傲的龙骨</p>
+<p>穿越千古<br>茶与马诉说着沧桑<br>唯一不能说的是<br>对这尘世的依恋</p>
+<p>但我可以<br>悄悄地告诉你<br>所有的秘密都在<br>泸沽</center></p>
+<h3 id="Our-poem-By-Lisa-June-2015"><a href="#Our-poem-By-Lisa-June-2015" class="headerlink" title="Our poem (By Lisa) June 2015"></a>Our poem (By Lisa) June 2015</h3><center>if i were a Chinese poet I'd create a new symbol for our friendship 
+which would be pronounced like the sound of our laughters 
+and i would carve it in a thousand seeds
+to plant them and watch them grow strong and straight 
+
+<p>and everyone who eats their fruits to ease their hunger<br>will taste the sweetness of our memories and dreams<br>if i were a preacher , I’d teach our symbol </p>
+<p>i would make a school of the art of writing it<br>and i would carve it in a thousand stones<br>to pave the way to unexplored breadth -taking lands</p>
+<p>and everyone who walks their path will want to run<br>and will be able to find their way to our warm home </center></p>
+<h3 id="清明游荔湾湖-4-April-2017"><a href="#清明游荔湾湖-4-April-2017" class="headerlink" title="清明游荔湾湖 4 April 2017"></a>清明游荔湾湖 4 April 2017</h3><center>两叶扁舟荡，晴日荔园新。
+惜落木棉意，欢心未可知。</center>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2017/04/22/Poem-Part1/" data-id="clo6kh8s0001eycxjbrew6o58" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/poem/" rel="tag">poem</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-Wapper-fasta" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2017/04/15/Wapper-fasta/">更改fasta序列每一行显示的碱基数目</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2017/04/15/Wapper-fasta/" class="article-date">
+  <time datetime="2017-04-14T16:44:23.000Z" itemprop="datePublished">2017-04-14</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/">生物信息</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <h5 id="一个Perl小程序"><a href="#一个Perl小程序" class="headerlink" title="一个Perl小程序"></a>一个Perl小程序</h5><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/perl -w</span></span><br><span class="line"><span class="keyword">use</span> strict;</span><br><span class="line"><span class="keyword">die</span> <span class="string">&quot;perl $0 &lt;*.fa&gt; &lt;number of one line&gt;&quot;</span> <span class="keyword">unless</span> (@ARGV == <span class="number">2</span>) ;</span><br><span class="line"><span class="keyword">my</span> $genome=<span class="keyword">shift</span>;</span><br><span class="line"><span class="keyword">my</span> $num = <span class="keyword">shift</span>;</span><br><span class="line"><span class="keyword">open</span> (IN,$genome) <span class="keyword">or</span> <span class="keyword">die</span> $!;</span><br><span class="line">$/=<span class="string">&quot;&gt;&quot;</span>;&lt;IN&gt;;$/=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="keyword">while</span> (&lt;IN&gt;) &#123;</span><br><span class="line">    <span class="keyword">chomp</span>;</span><br><span class="line">    <span class="keyword">my</span> $id = $_;</span><br><span class="line">    <span class="keyword">print</span> <span class="string">&quot;&gt;$id\n&quot;</span>;</span><br><span class="line">    $/=<span class="string">&quot;&gt;&quot;</span>;</span><br><span class="line">    <span class="keyword">my</span> $seq=&lt;IN&gt;;</span><br><span class="line">    <span class="keyword">chomp</span> $seq;</span><br><span class="line">    $seq =~ <span class="regexp">s/\n//g</span>;</span><br><span class="line">    <span class="number">1</span> <span class="keyword">while</span> $seq =~ <span class="regexp">s/(\w&#123;$num&#125;)(\w+)$/$1\n$2/</span>;</span><br><span class="line">    <span class="keyword">print</span> <span class="string">&quot;$seq\n&quot;</span>;</span><br><span class="line">    $/=<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">close</span> IN;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2017/04/15/Wapper-fasta/" data-id="clo6kh8s9002hycxj35evfsov" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fasta/" rel="tag">fasta</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/perl/" rel="tag">perl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/wapper/" rel="tag">wapper</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-The-fog-in-spring" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2017/03/22/The-fog-in-spring/">春日袭雾</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2017/03/22/The-fog-in-spring/" class="article-date">
+  <time datetime="2017-03-21T19:22:35.000Z" itemprop="datePublished">2017-03-21</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/">诗文杂趣</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <h4 id="春日袭雾"><a href="#春日袭雾" class="headerlink" title="春日袭雾"></a><em>春日袭雾</em></h4><center>花寻山涧中，
+    鸟鸣绿屏踪。
+    雾散苔痕近，
+    似有人问gene。
+
+<p><img src="https://comery-1258590047.cos.ap-guangzhou.myqcloud.com/20170321/IMG_7504.JPG" alt="大雾弥漫"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2017/03/22/The-fog-in-spring/" data-id="clo6kh8s60021ycxjb2z8h52m" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/poem/" rel="tag">poem</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-lonely" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2017/02/21/lonely/">孤独</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2017/02/21/lonely/" class="article-date">
+  <time datetime="2017-02-21T13:14:20.000Z" itemprop="datePublished">2017-02-21</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/">诗文杂趣</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <h4 id="孤独"><a href="#孤独" class="headerlink" title="孤独"></a>孤独</h4><p>孤独这两个字拆开看，有小孩，有水果，有走兽，有蚊蝇，足以撑起一个盛夏傍晚的巷子口，人味十足。<br>夏日的傍晚，你看着嗡嗡飞舞的蝇虫，不远处的狗摇着尾巴穿巷而过，你手中拿着吃剩下的半块西瓜，忽然觉得过了半辈子，又好像只过了半分钟。</p>
+<blockquote>
+<p>在朋友的一篇文章中看到的，觉得这段文字十分的美！click here &#x3D;&gt; <a target="_blank" rel="noopener" href="http://mp.weixin.qq.com/s/E0XAUQ9-snWz5PQ5n9_bcw">好日子会闪闪发光</a></p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2017/02/21/lonely/" data-id="clo6kh8se0036ycxj043t4gpv" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/longliness/" rel="tag">longliness</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-Temptation-of-Book" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2017/02/14/Temptation-of-Book/">Temptation of Book</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2017/02/14/Temptation-of-Book/" class="article-date">
+  <time datetime="2017-02-13T23:17:23.000Z" itemprop="datePublished">2017-02-13</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E8%AF%97%E6%96%87%E6%9D%82%E8%B6%A3/">诗文杂趣</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>无法与你在深夜里对视<br>像不能直视精绝女王的眼睛<br>一个音符的休止<br>也是因你引入迷途<br>没人知道你是磁铁，你是巨大的<br>黑洞<br>就像死人永远不能说出死后<br>去往了何处<br>只有这消静谧<br>为你蒙上一层面纱<br>于是，我在那一瞬的光中<br>便失去了挣扎的力量</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2017/02/14/Temptation-of-Book/" data-id="clo6kh8s4001tycxjhs0g5h4d" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/poem/" rel="tag">poem</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-No-such-thing" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2016/11/15/No-such-thing/">No such thing</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2016/11/15/No-such-thing/" class="article-date">
+  <time datetime="2016-11-14T23:25:46.000Z" itemprop="datePublished">2016-11-14</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD/">兴趣爱好</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>Today I gonna recommend a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/John_Mayer">John Maryer</a>‘s song: </p>
+<blockquote>
+<p>&lt;&lt; No such thing &gt;&gt;</p>
+</blockquote>
+<p>you can feel a kind of bad,cool,pride and something like a wild wind in the spring sunny day. Totally I like that words:</p>
+<blockquote>
+<p>I’d like to think the best of me<br>Is still hiding<br>Up my sleeve</p>
+</blockquote>
+<p>Following is scripts:</p>
+<p>＂Welcome to the real world＂, she said to me<br>Condescendingly<br>Take a seat<br>Take your life<br>Plot it out in black and white<br>Well I never lived the dreams of the prom kings<br>And the drama queens<br>I’d like to think the best of me<br>Is still hiding<br>Up my sleeve </p>
+<p>They love to tell you<br>Stay inside the lines<br>But something’s better<br>On the other side </p>
+<p>I wanna run through the halls of my high school<br>I wanna scream at the<br>Top of my lungs<br>I just found out there’s no such thing as the real world<br>Just a lie you’ve got to rise above </p>
+<p>So the good boys and girls take the so called right track<br>Faded white hats<br>Grabbing credits<br>Maybe transfers<br>They read all the books but they can’t find the answers<br>And all of our parents<br>They’re getting older<br>I wonder if they’ve wished for anything better<br>While in their memories<br>Tiny tragedies<br>They love to tell you<br>Stay inside the lines<br>But something’s better<br>On the other side </p>
+<p>I wanna run through the halls of my high school<br>I wanna scream at the<br>Top of my lungs<br>I just found out there’s no such thing as the real world<br>Just a lie you’ve got to rise above </p>
+<p>I am invincible<br>I am invincible<br>I am invincible<br>As long as I’m alive </p>
+<p>I wanna run through the halls of my high school<br>I wanna scream at the<br>Top of my lungs<br>I just found out there’s no such thing as the real world<br>Just a lie you’ve got to rise above </p>
+<p>I just can’t wait til my 10 year reunion<br>I’m gonna bust down the double doors<br>And when I stand on these tables before you<br>You will know what all this time was for </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2016/11/15/No-such-thing/" data-id="clo6kh8rz0016ycxj3wv87xuf" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/music/" rel="tag">music</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-To-make-a-mountain-out-of-a-molehill" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2016/11/15/To-make-a-mountain-out-of-a-molehill/">To make a mountain out of a molehill</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2016/11/15/To-make-a-mountain-out-of-a-molehill/" class="article-date">
+  <time datetime="2016-11-14T22:38:48.000Z" itemprop="datePublished">2016-11-14</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E5%9C%B0%E9%81%93%E8%8B%B1%E8%AF%AD/">地道英语</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>This is from BBC Authentic Real English</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.24en.com/bbc/bbc3/2016-07-20/186371.html">To make a mountain out of a molehill</a> 小题大做</p>
+</blockquote>
+<p>我们多用这个表达来形容某人把一件小事故意扩大，使其看起来比实际的糟糕.</p>
+<h4 id="Examples"><a href="#Examples" class="headerlink" title="Examples:"></a>Examples:</h4><p>I only asked him to do the shopping and now he’s going on about how he has no time to go to the pub – he’s making a mountain out of a molehill.</p>
+<p>It’s only a 2000 word essay; stop making a mountain out of a molehill!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2016/11/15/To-make-a-mountain-out-of-a-molehill/" data-id="clo6kh8sa002lycxj9qzh68qn" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/English/" rel="tag">English</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+    <article id="post-In-the-blink-of-an-eye" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2016/11/14/In-the-blink-of-an-eye/">In the blink of an eye</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2016/11/14/In-the-blink-of-an-eye/" class="article-date">
+  <time datetime="2016-11-13T23:17:43.000Z" itemprop="datePublished">2016-11-13</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E5%9C%B0%E9%81%93%E8%8B%B1%E8%AF%AD/">地道英语</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>This is from BBC Authentic Real English</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.24en.com/bbc/bbc3/2016-08-10/186446.html">In the blink of an eye</a> 一眨眼之间</p>
+</blockquote>
+<h4 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h4><p>My new computer can download a large video in the blink of an eye.</p>
+<p>We were so tired after the party, everyone was fast asleep in the blink of an eye.</p>
+<p>Sarah couldn’t believe that the first two years of university went in the blink of an eye.</p>
+<p>这个表达也常用来形容变化来得非常快。有时候会被缩写为 in a blink。e.g.:</p>
+<p>A 70-story skyscraper just rose from the ground in a blink.</p>
+<p>I couldn’t believe the transformation in Sarah; she went from a shy sixteen-year-old with braces to an outspoken youth MP in a blink.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2016/11/14/In-the-blink-of-an-eye/" data-id="clo6kh8rv000yycxjepsncinv" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/English/" rel="tag">English</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    <a class="extend prev" rel="prev" href="/page/3/">Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next</a>
+  </nav>
+  
+</section>
+</div>
+    <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>Carpe&#39;s Garden &copy; 2023</li>
+      
+        <li>
+          
+            <a href="https://beian.miit.gov.cn/" target="_blank"></a>
+            
+        </li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+    <p><ul class="list-inline">
+  
+  <li><i class="fe fe-bar-chart tooltip" data-tooltip="PV"></i> <span id="busuanzi_value_site_pv"></span></li>
+  
+  <li><i class="fe fe-smile-alt tooltip" data-tooltip="UV"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+</ul></p>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="Carpe&#39;s Garden"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>

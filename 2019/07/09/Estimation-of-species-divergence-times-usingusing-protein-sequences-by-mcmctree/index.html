@@ -1,37 +1,266 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  
+  <meta name="description" content="学习总结 思考感悟 知识管理">
+  
+  <title>
+    Estimation of species divergence times usingusing protein sequences by mcmctree |
+    
+    Carpe&#39;s Garden
+  </title>
+  <!-- Icon -->
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+  
+<link rel="stylesheet" href="/css/style.css">
 
-{% block title %}{{ page.title }} | {{ config.title }}{% endblock %}
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
-{% block page_class %}page-post-detail{% endblock %}
+  
+  
+<script src="/js/pace.min.js"></script>
 
+<meta name="generator" content="Hexo 6.3.0"></head>
 
-{% block content %}
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-Estimation-of-species-divergence-times-usingusing-protein-sequences-by-mcmctree" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
 
-  <div id="posts" class="posts-expand">
-    {{ post_template.render(page) }}
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h1 class="article-title" itemprop="name">
+    Estimation of species divergence times usingusing protein sequences by mcmctree
+  </h1>
+  
+  
 
-    <div class="post-spread">
-      {% if theme.jiathis %}
-        {% include '_partials/share/jiathis.swig' %}
-      {% elseif theme.baidushare %}
-        {% include '_partials/share/baidushare.swig' %}
-      {% elseif theme.add_this_id %}
-        {% include '_partials/share/add-this.swig' %}
-      {% elseif theme.duoshuo_shortname and theme.duoshuo_share %}
-        {% include '_partials/share/duoshuo_share.swig' %}
-      {% endif %}
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2019/07/09/Estimation-of-species-divergence-times-usingusing-protein-sequences-by-mcmctree/" class="article-date">
+  <time datetime="2019-07-09T10:10:23.000Z" itemprop="datePublished">2019-07-09</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/">生物信息</a>
+</div>
+
     </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+        <h3 id="1-prepare-a-phylogenetic-tree-with-fossil-evidence-time"><a href="#1-prepare-a-phylogenetic-tree-with-fossil-evidence-time" class="headerlink" title="1. prepare a phylogenetic tree with fossil evidence time"></a>1. prepare a phylogenetic tree with fossil evidence time</h3><p>The first line contains: species number(Tab)fossil record number</p>
+<blockquote>
+<p>example:<br>18   1<br>((((((((((((PET,(((PEFU,PN),PEFC),PEEL)),PEE),PT),PO),PF),PC15),(LB,CC)),SC)’&gt;0.90&lt;1.2833’,(CP,SL)’&gt;0.9898&lt;1.3899’),FM),AS),SN);</p>
+</blockquote>
+<ul>
+<li>control file</li>
+</ul>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">seed = -1</span><br><span class="line">seqfile = 71genes.gblocks.protein.linked.fa</span><br><span class="line">treefile = three.fossil.tree</span><br><span class="line">mcmcfile = mcmc.txt</span><br><span class="line">outfile = out.txt</span><br><span class="line">ndata = 1</span><br><span class="line">seqtype = 2 * 0: nucleotides; 1:codons; 2:AAs</span><br><span class="line">usedata = 3 * 0: no data; 1:seq like; 2:normal approximation; 3:out.BV (in.BV)</span><br><span class="line">clock = 2 * 1: global clock; 2: independent rates; 3: correlated rates</span><br><span class="line">RootAge = &#x27;&lt;7.0&#x27;  * safe constraint on root age, used if no fossil for root.</span><br><span class="line">model = 0 * 0:JC69, 1:K80, 2:F81, 3:F84, 4:HKY85</span><br><span class="line">alpha = 0 * alpha for gamma rates at sites</span><br><span class="line">ncatG = 5 * No. categories in discrete gamma</span><br><span class="line">cleandata = 0 * remove sites with ambiguity data (1:yes, 0:no)?</span><br><span class="line">BDparas = 1 1 0.1 * birth, death, sampling</span><br><span class="line">kappa_gamma = 6 2 * gamma prior for kappa</span><br><span class="line">alpha_gamma = 1 1 * gamma prior for alpha</span><br><span class="line">rgene_gamma = 2 201 * gamma prior for rate for genes</span><br><span class="line">sigma2_gamma = 1 10 1 * gamma prior for sigma^2     (for clock=2 or 3)</span><br><span class="line">finetune = 1: .1 .1 .1 .1 .1 .1 * auto (0 or 1): times, rates, mixing, paras, RateParas, FossilErr</span><br><span class="line">print = 1 * 0: no mcmc sample; 1: everything except branch rates 2: everything</span><br><span class="line">burnin = 2000</span><br><span class="line">sampfreq = 10</span><br><span class="line">nsample = 20000</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-run-mcmctree"><a href="#2-run-mcmctree" class="headerlink" title="2. run mcmctree"></a>2. run mcmctree</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mcmctree mcmctree.ctl</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-modify-settings-in-tmp1-ctl"><a href="#3-modify-settings-in-tmp1-ctl" class="headerlink" title="3. modify settings in tmp1.ctl"></a>3. modify settings in tmp1.ctl</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">seqfile = tmp1.txt</span><br><span class="line">treefile = tmp1.trees</span><br><span class="line">outfile = tmp1.out</span><br><span class="line">noisy = 3</span><br><span class="line">seqtype = 2</span><br><span class="line">model = 0</span><br><span class="line">aaRatefile = wag.dat *from /data folder in paml&#x27;s path</span><br><span class="line">fix_alpha = 0</span><br><span class="line">alpha = 0.5</span><br><span class="line">ncatG = 4</span><br><span class="line">Small_Diff = 0.1e-6</span><br><span class="line">getSE = 2</span><br><span class="line">method = 1</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-run-codeml"><a href="#4-run-codeml" class="headerlink" title="4. run codeml"></a>4. run codeml</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codeml tmp1.ctl</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-rename-rst2-into-in-BV"><a href="#5-rename-rst2-into-in-BV" class="headerlink" title="5. rename rst2 into in.BV"></a>5. rename rst2 into in.BV</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mv</span> rst2 in.BV</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-modify-the-item-of-‘usdata’-in-mcmctree-ctl-file"><a href="#6-modify-the-item-of-‘usdata’-in-mcmctree-ctl-file" class="headerlink" title="6. modify the item of ‘usdata’ in mcmctree.ctl file"></a>6. modify the item of ‘usdata’ in mcmctree.ctl file</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usedata = 2</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-final-run-of-mcmctree"><a href="#7-final-run-of-mcmctree" class="headerlink" title="7. final run of mcmctree"></a>7. final run of mcmctree</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mcmctree mcmctree.ctl</span><br></pre></td></tr></table></figure>
+<p>finally, you will get the tree you want!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2019/07/09/Estimation-of-species-divergence-times-usingusing-protein-sequences-by-mcmctree/" data-id="clo6kh8rl0006ycxj4qfvf2os" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bio-software/" rel="tag">bio-software</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/codeml/" rel="tag">codeml</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mcmctree/" rel="tag">mcmctree</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/phylogenetic-tree/" rel="tag">phylogenetic tree</a></li></ul>
+
+    </footer>
+
   </div>
 
-{% endblock %}
+  
+  
+<nav class="article-nav">
+  
+  <a href="/2020/01/12/Look-across/" class="article-nav-link">
+    <strong class="article-nav-caption">Newer</strong>
+    <div class="article-nav-title">
+      
+      隔岸相望
+      
+    </div>
+  </a>
+  
+  
+  <a href="/2019/05/26/Hackathon/" class="article-nav-link">
+    <strong class="article-nav-caption">Older</strong>
+    <div class="article-nav-title">Hackathon</div>
+  </a>
+  
+</nav>
 
-{% block sidebar %}
-  {{ sidebar_template.render(true) }}
-{% endblock %}
+  
 
-{% block script_extra %}
-  {% include '_scripts/pages/post-details.swig' %}
-{% endblock %}
+  
+  
+  
+  
+
+</article>
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>Carpe&#39;s Garden &copy; 2023</li>
+      
+        <li>
+          
+            <a href="https://beian.miit.gov.cn/" target="_blank"></a>
+            
+        </li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+    <p><ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt tooltip" data-tooltip="UV"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark tooltip" data-tooltip="PV"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul></p>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="Carpe&#39;s Garden"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">Gallery</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>
