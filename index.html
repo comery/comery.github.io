@@ -66,6 +66,75 @@
     <h1 class="page-type-title"></h1>
     
     
+    <article id="post-parse-and-monitor-job-status-on-slurm-system" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+  
+  <h2 class="article-title" itemprop="name">
+    <a href="/2023/10/27/parse-and-monitor-job-status-on-slurm-system/">parse and monitor job status on slurm system</a>
+  </h2>
+  
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2023/10/27/parse-and-monitor-job-status-on-slurm-system/" class="article-date">
+  <time datetime="2023-10-27T11:31:16.000Z" itemprop="datePublished">2023-10-27</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/">生物信息</a>
+</div>
+
+    </div>
+    
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+        
+      
+      
+        <p>最近想写一个对投递到集群上面的任务监控的脚本，以方便多个任务批量操作并且可以整合到一个现有的流程里面。所有的集群任务管理系统是slurm， 其中有一个步骤是获取所有任务的运行状态，但开始总是获取不到任务的状态，会直接返回<code>----------</code>字符串，表示没有获取到这个任务，我尝试了以下三种写法都不能解决问题：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cmd = <span class="string">f&quot; /usr/bin/sacct -o State -j <span class="subst">&#123;job&#125;</span> | tail -n 1 &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## method 1</span></span><br><span class="line">process = subprocess.Popen(command, shell=<span class="literal">True</span>, stdout=subprocess.PIPE, stderr=subprocess.PIPE)</span><br><span class="line">output, error = process.communicate()</span><br><span class="line">job_status = job.decode().strip()</span><br><span class="line"></span><br><span class="line"><span class="comment">## method 2</span></span><br><span class="line">result = subprocess.run(command, shell=<span class="literal">True</span>, capture_output=<span class="literal">True</span>, text=<span class="literal">True</span>)</span><br><span class="line">job_status = result.stdout.strip()</span><br><span class="line"><span class="keyword">if</span> result.stderr:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;An error occurred while running the squeue command: &#123;command&#125;&quot;</span>, error.decode())</span><br><span class="line">    check_error_list.add(job)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># method 3, os.system</span></span><br><span class="line"><span class="keyword">with</span> os.popen(cmd, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">    job_status = p.read().strip()</span><br><span class="line">    <span class="keyword">return</span> job_status</span><br></pre></td></tr></table></figure>
+
+
+
+<p>最后跟同事讨论发现，她也遇到过这个问题，这个原因是因为这个任务系统有时候,他就会卡住投不上去,然后要过段时间才能获取到, 所以循环多次获取或者在第一次获取的时候等一会。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># if this is the first checking, please hold your horses,</span></span><br><span class="line"><span class="comment"># because the system may not response immediately</span></span><br><span class="line"><span class="keyword">if</span> check_round == <span class="number">0</span>:</span><br><span class="line">    time.sleep(<span class="number">30</span>)</span><br><span class="line">job_status = parse_job_status(job)  <span class="comment"># 其实上面的3种方法任一一个都可以</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这就叫，欲速则不达~</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://comery.github.io/2023/10/27/parse-and-monitor-job-status-on-slurm-system/" data-id="clo82jjpd0000zaxj9w3r8wd8" class="article-share-link">
+        Share
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/slurm/" rel="tag">slurm</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+</article>
+    
     <article id="post-non-root-user-install-python3-for-linux" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -697,78 +766,6 @@
       </a>
       
 <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flag/" rel="tag">flag</a></li></ul>
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-</article>
-    
-    <article id="post-compare-three-methods-to-parse-fasta-using-python" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-      
-  
-  <h2 class="article-title" itemprop="name">
-    <a href="/2019/01/25/compare-three-methods-to-parse-fasta-using-python/">compare three methods to parse fasta using python</a>
-  </h2>
-  
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2019/01/25/compare-three-methods-to-parse-fasta-using-python/" class="article-date">
-  <time datetime="2019-01-24T23:14:56.000Z" itemprop="datePublished">2019-01-24</time>
-</a>
-      
-<div class="article-category">
-  <a class="article-category-link" href="/categories/%E7%94%9F%E7%89%A9%E4%BF%A1%E6%81%AF/">生物信息</a>
-</div>
-
-    </div>
-    
-
-    
-
-    <div class="article-entry" itemprop="articleBody">
-      
-      
-        
-      
-      
-        <p>当我们在写一个比较复杂的脚本时，往往会涉及到很多小的函数，但是实现其功能的写法有很多种，如果能够清楚他们的速度，那么又便于提升我们代码整体的效率。</p>
-<p>举一个非常简单而又常用的例子，用python写一个转化fasta文件的反向互补序列的脚本。</p>
-<p>实现的方法有很多种，我们这里只讨论3中比较常用的：</p>
-<ol>
-<li>replace()</li>
-<li>dictionary</li>
-<li>transtable()</li>
-</ol>
-        
-          <p>
-            <a class="article-more-link" href="/2019/01/25/compare-three-methods-to-parse-fasta-using-python/">
-              Read More...
-            </a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://comery.github.io/2019/01/25/compare-three-methods-to-parse-fasta-using-python/" data-id="clo6kh8sb002vycxj9uwq7ibm" class="article-share-link">
-        Share
-      </a>
-      
-<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fasta/" rel="tag">fasta</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reverse-complement/" rel="tag">reverse &amp; complement</a></li></ul>
 
     </footer>
 

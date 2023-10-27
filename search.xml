@@ -1207,4 +1207,27 @@ to plant them and watch them grow strong and straight
         <tag>flag</tag>
       </tags>
   </entry>
+  <entry>
+    <title>parse and monitor job status on slurm system</title>
+    <url>/2023/10/27/parse-and-monitor-job-status-on-slurm-system/</url>
+    <content><![CDATA[<p>最近想写一个对投递到集群上面的任务监控的脚本，以方便多个任务批量操作并且可以整合到一个现有的流程里面。所有的集群任务管理系统是slurm， 其中有一个步骤是获取所有任务的运行状态，但开始总是获取不到任务的状态，会直接返回<code>----------</code>字符串，表示没有获取到这个任务，我尝试了以下三种写法都不能解决问题：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">cmd = <span class="string">f&quot; /usr/bin/sacct -o State -j <span class="subst">&#123;job&#125;</span> | tail -n 1 &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## method 1</span></span><br><span class="line">process = subprocess.Popen(command, shell=<span class="literal">True</span>, stdout=subprocess.PIPE, stderr=subprocess.PIPE)</span><br><span class="line">output, error = process.communicate()</span><br><span class="line">job_status = job.decode().strip()</span><br><span class="line"></span><br><span class="line"><span class="comment">## method 2</span></span><br><span class="line">result = subprocess.run(command, shell=<span class="literal">True</span>, capture_output=<span class="literal">True</span>, text=<span class="literal">True</span>)</span><br><span class="line">job_status = result.stdout.strip()</span><br><span class="line"><span class="keyword">if</span> result.stderr:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;An error occurred while running the squeue command: &#123;command&#125;&quot;</span>, error.decode())</span><br><span class="line">    check_error_list.add(job)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># method 3, os.system</span></span><br><span class="line"><span class="keyword">with</span> os.popen(cmd, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> p:</span><br><span class="line">    job_status = p.read().strip()</span><br><span class="line">    <span class="keyword">return</span> job_status</span><br></pre></td></tr></table></figure>
+
+
+
+<p>最后跟同事讨论发现，她也遇到过这个问题，这个原因是因为这个任务系统有时候,他就会卡住投不上去,然后要过段时间才能获取到, 所以循环多次获取或者在第一次获取的时候等一会。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># if this is the first checking, please hold your horses,</span></span><br><span class="line"><span class="comment"># because the system may not response immediately</span></span><br><span class="line"><span class="keyword">if</span> check_round == <span class="number">0</span>:</span><br><span class="line">    time.sleep(<span class="number">30</span>)</span><br><span class="line">job_status = parse_job_status(job)  <span class="comment"># 其实上面的3种方法任一一个都可以</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>这就叫，欲速则不达~</p>
+]]></content>
+      <categories>
+        <category>生物信息</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>slurm</tag>
+      </tags>
+  </entry>
 </search>
