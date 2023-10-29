@@ -1,57 +1,82 @@
+/* main function */
+import initUtils from "./utils.js";
+import initTyped from "./plugins/typed.js";
+import initModeToggle from "./tools/lightDarkSwitch.js";
+import initLazyLoad from "./layouts/lazyload.js";
+import initScrollTopBottom from "./tools/scrollTopBottom.js";
+import initLocalSearch from "./tools/localSearch.js";
+import initCopyCode from "./tools/codeBlock.js";
 
-// Highlight current nav item
-var hasCurrent = false;
-var isindexpage = true;
-$('#main-nav > li').each(function () {
-	if(isindexpage){
-		isindexpage = false;
-		return true;
-	  }
-	var url = window.location.href;
-	if(url.toUpperCase().indexOf($(this).attr("linktext").trim().toUpperCase()) != -1){
-		$(this).addClass('current-menu-item current_page_item');
-		hasCurrent = true;
-	} else {
-		$(this).removeClass('current-menu-item current_page_item');
-	}
-});
-
-if (!hasCurrent) {
-	$('#main-nav > li:first').addClass('current-menu-item current_page_item');
-}
-
-
-
-// article toc
-var toc = document.getElementById('toc')
-
-if (toc != null) {
-	window.addEventListener("scroll", scrollcatelogHandler);
-	var tocPosition = 194+25;
-
-	function scrollcatelogHandler(e) {
-		 var event = e || window.event,
-		     target = event.target || event.srcElement;
-		 var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-		 if (scrollTop > tocPosition) {
-		     toc.classList.add("toc-fixed");
-		 } else {
-		     toc.classList.remove("toc-fixed");
-		 }
-	}
-}
-
-
-$('#main-navigation').on('click', function(){
-    if ($('#main-navigation').hasClass('main-navigation-open')){
-      $('#main-navigation').removeClass('main-navigation-open');
+export const main = {
+  themeInfo: {
+    theme: `Redefine v${theme.version}`,
+    author: "EvanNotFound",
+    repository: "https://github.com/EvanNotFound/hexo-theme-redefine",
+  },
+  localStorageKey: "REDEFINE-THEME-STATUS",
+  styleStatus: {
+    isExpandPageWidth: false,
+    isDark: false,
+    fontSizeLevel: 0,
+    isOpenPageAside: true,
+  },
+  printThemeInfo: () => {
+    console.log(
+      `      ______ __  __  ______  __    __  ______                       \r\n     \/\\__  _\/\\ \\_\\ \\\/\\  ___\\\/\\ \"-.\/  \\\/\\  ___\\                      \r\n     \\\/_\/\\ \\\\ \\  __ \\ \\  __\\\\ \\ \\-.\/\\ \\ \\  __\\                      \r\n        \\ \\_\\\\ \\_\\ \\_\\ \\_____\\ \\_\\ \\ \\_\\ \\_____\\                    \r\n         \\\/_\/ \\\/_\/\\\/_\/\\\/_____\/\\\/_\/  \\\/_\/\\\/_____\/                    \r\n                                                               \r\n ______  ______  _____   ______  ______ __  __   __  ______    \r\n\/\\  == \\\/\\  ___\\\/\\  __-.\/\\  ___\\\/\\  ___\/\\ \\\/\\ \"-.\\ \\\/\\  ___\\   \r\n\\ \\  __<\\ \\  __\\\\ \\ \\\/\\ \\ \\  __\\\\ \\  __\\ \\ \\ \\ \\-.  \\ \\  __\\   \r\n \\ \\_\\ \\_\\ \\_____\\ \\____-\\ \\_____\\ \\_\\  \\ \\_\\ \\_\\\\\"\\_\\ \\_____\\ \r\n  \\\/_\/ \/_\/\\\/_____\/\\\/____\/ \\\/_____\/\\\/_\/   \\\/_\/\\\/_\/ \\\/_\/\\\/_____\/\r\n                                                               \r\n  Github: https:\/\/github.com\/EvanNotFound\/hexo-theme-redefine`,
+    ); // console log message
+  },
+  setStyleStatus: () => {
+    localStorage.setItem(
+      main.localStorageKey,
+      JSON.stringify(main.styleStatus),
+    );
+  },
+  getStyleStatus: () => {
+    let temp = localStorage.getItem(main.localStorageKey);
+    if (temp) {
+      temp = JSON.parse(temp);
+      for (let key in main.styleStatus) {
+        main.styleStatus[key] = temp[key];
+      }
+      return temp;
     } else {
-      $('#main-navigation').addClass('main-navigation-open');
+      return null;
     }
-  });
+  },
+  refresh: () => {
+    initUtils();
+    initModeToggle();
+    initScrollTopBottom();
+    if (
+      theme.home_banner.subtitle.text.length !== 0 &&
+      location.pathname === config.root
+    ) {
+      initTyped("subtitle");
+    }
 
-$('#content').on('click', function(){
-    if ($('#main-navigation').hasClass('main-navigation-open')){
-      $('#main-navigation').removeClass('main-navigation-open');
+    if (theme.navbar.search.enable === true) {
+      initLocalSearch();
     }
+
+    if (theme.articles.code_block.copy === true) {
+      initCopyCode();
+    }
+
+    if (theme.articles.lazyload === true) {
+      initLazyLoad();
+    }
+  },
+};
+
+export function initMain() {
+  main.printThemeInfo();
+  main.refresh();
+}
+
+document.addEventListener("DOMContentLoaded", initMain);
+
+try {
+  swup.hooks.on("page:view", () => {
+    main.refresh();
   });
+} catch (e) {}
